@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@include file="incude/inc_header.jsp" %>
+<%@include file="include/inc_header.jsp" %>
 
-    <!-- Begin Page Content -->
+
     <div class="container-fluid">
 
         <!-- Page Heading -->
@@ -14,8 +14,8 @@
         ㅎㅇ
 
     </div>
-    <!-- /.container-fluid -->
 
 
 
-<%@include file="incude/inc_footer.jsp" %>
+
+<%@include file="include/inc_footer.jsp" %>
