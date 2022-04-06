@@ -31,8 +31,7 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
         registry.addResourceHandler("/css/**").addResourceLocations("classpath:/static/css/");
         registry.addResourceHandler("/img/**").addResourceLocations("classpath:/static/img/");
         registry.addResourceHandler("/video/**").addResourceLocations("classpath:/static/video/");
-        //npm으로 다운로드 받은 리소스들을 관리하기 위한 디렉토리  jquery, bootstrap, toast ui...
-        registry.addResourceHandler("/node_modules/**").addResourceLocations("classpath:/static/node_modules/");
+        registry.addResourceHandler("/sbAdmin2/**").addResourceLocations("classpath:/static/sbAdmin2/");
     }
 
 }
