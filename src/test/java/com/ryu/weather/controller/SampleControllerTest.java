@@ -1,9 +1,5 @@
 package com.ryu.weather.controller;
 
-import jdk.nashorn.internal.parser.JSONParser;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.junit.Test;
 
 import java.io.BufferedReader;
@@ -19,12 +15,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class SampleControllerTest {
 
-
-    //단기 예보 조회
     @Test
-    public void getWetherShort() throws IOException {
-        StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst");
-
+    public void getWether() throws IOException {
+        StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst");
         urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=2KFAsAFNHzs%2FCIakKfPNyRft%2BsAxNov7i1inpO7f1qxlJ8CXFp5P6KRmBSi%2FuBnpJZdG952jW%2FPnidC76%2FYwbw%3D%3D");
         /*페이지번호*/
         urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8"));
@@ -33,9 +26,9 @@ public class SampleControllerTest {
         /*요청자료형식(XML/JSON) Default: XML*/
         urlBuilder.append("&" + URLEncoder.encode("dataType","UTF-8") + "=" + URLEncoder.encode("JSON", "UTF-8"));
         /*‘21년 6월 28일 발표*/
-        urlBuilder.append("&" + URLEncoder.encode("base_date","UTF-8") + "=" + URLEncoder.encode("20220411", "UTF-8"));
+        urlBuilder.append("&" + URLEncoder.encode("base_date","UTF-8") + "=" + URLEncoder.encode("20220407", "UTF-8"));
         /*06시 발표(정시단위) */
-        urlBuilder.append("&" + URLEncoder.encode("base_time","UTF-8") + "=" + URLEncoder.encode("0500", "UTF-8"));
+        urlBuilder.append("&" + URLEncoder.encode("base_time","UTF-8") + "=" + URLEncoder.encode("0600", "UTF-8"));
         /*예보지점의 X 좌표값*/
         urlBuilder.append("&" + URLEncoder.encode("nx","UTF-8") + "=" + URLEncoder.encode("88", "UTF-8"));
         /*예보지점의 Y 좌표값*/
@@ -61,31 +54,7 @@ public class SampleControllerTest {
         }
         rd.close();
         conn.disconnect();
-        //System.out.println(sb.toString());
-
-
-
-        try {
-            String str = sb.toString();
-            //System.out.println(str);
-            JSONObject obj = new JSONObject(str);
-            obj = (JSONObject) obj.get("response");
-            obj = (JSONObject) obj.get("body");
-            obj = (JSONObject) obj.get("items");
-            JSONArray array = (JSONArray) obj.get("item");
-
-            for (int i = 0; i < array.length(); i++){
-                obj = (JSONObject) array.get(i);
-                System.out.print(obj.get("fcstDate") + ",");
-                System.out.print(obj.get("fcstTime") + ",");
-                System.out.print(obj.get("category") + ",");
-                System.out.println(obj.get("fcstValue"));
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        System.out.println(sb.toString());
     }
-
-
 
 }
