@@ -15,6 +15,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.Calendar;
 import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -35,7 +36,7 @@ public class SampleControllerTest {
         /*요청자료형식(XML/JSON) Default: XML*/
         urlBuilder.append("&" + URLEncoder.encode("dataType","UTF-8") + "=" + URLEncoder.encode("JSON", "UTF-8"));
         /*‘21년 6월 28일 발표*/
-        urlBuilder.append("&" + URLEncoder.encode("base_date","UTF-8") + "=" + URLEncoder.encode("20220412", "UTF-8"));
+        urlBuilder.append("&" + URLEncoder.encode("base_date","UTF-8") + "=" + URLEncoder.encode(Util.getToday(), "UTF-8"));
         /*06시 발표(정시단위) */
         urlBuilder.append("&" + URLEncoder.encode("base_time","UTF-8") + "=" + URLEncoder.encode("0500", "UTF-8"));
         /*예보지점의 X 좌표값*/
@@ -77,14 +78,28 @@ public class SampleControllerTest {
 
             for (int i = 0; i < array.length(); i++){
                 obj = (JSONObject) array.get(i);
-                System.out.print(obj.get("fcstDate") + ",");
-                System.out.print(obj.get("fcstTime") + ",");
-                System.out.print(obj.get("category") + ",");
-                System.out.println(obj.get("fcstValue"));
+//              System.out.print(obj.get("fcstDate") + ",");
+//              System.out.print(obj.get("fcstTime") + ",");
+//              System.out.print(obj.get("category") + ",");
+//              System.out.println(obj.get("fcstValue"));
+                if(obj.get("fcstDate").equals(Util.getSomeDayMore(1))) {
+                    System.out.print(obj.get("category") + ",");
+                    System.out.println(obj.get("fcstValue"));
+                }
+
+                if(obj.get("fcstDate").equals(Util.getSomeDayMore(2))) {
+                    break;
+                }
+
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    @Test
+    public void getDateTime() {
+        System.out.println(Util.getSomeDayMore(1));
     }
 
 
