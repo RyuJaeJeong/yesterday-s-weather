@@ -1,0 +1,54 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400&family=Nanum+Pen+Script&display=swap');
+
+.container{
+    position: relative;
+}
+
+.main-first{
+    width: 100%;
+    height: 100%;
+    background-image: url(/img/bg.jpeg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding-top: 5px;
+}
+
+.main-first > .first-head{
+    display: flex;
+    margin-top: 20px;
+    justify-content: center;
+}
+
+.logo{
+    color: white;
+    font-size: 2.5em;
+    overflow:visible;
+    white-space:nowrap;
+    font-family: 'Nanum Pen Script', cursive;
+}
+
+.menu li{
+    display: inline-block;
+    margin-right: 50px;
+    color: white;
+    font-size: 1.25em;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.menu li:nth-child(3) {
+    margin-right: 100px;
+}
+
+.justifier {
+    flex-grow: 0.7;
+}
+
+.first-body{
+    display: flex;
+    justify-content: center;
+    height: 55%;
+    align-items: center;
+    color: white;
+    font-size: 2em;
+    font-family: 'Nanum Pen Script', cursive;
+}
