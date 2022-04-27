@@ -2,9 +2,11 @@
 
 .container{
     position: relative;
+    width: 100%;
+    height: 1000px;
 }
 
-.main-first{
+.main-wrapper{
     width: 100%;
     height: 100%;
     background-image: url(/img/bg.jpeg);
@@ -13,13 +15,15 @@
     padding-top: 5px;
 }
 
-.main-first > .first-head{
+.main-header{
     display: flex;
+    width: 100%;
+    height: 20%;
     margin-top: 20px;
     justify-content: center;
 }
 
-.logo{
+.main-logo{
     color: white;
     font-size: 2.5em;
     overflow:visible;
@@ -27,7 +31,7 @@
     font-family: 'Nanum Pen Script', cursive;
 }
 
-.menu li{
+.main-menu li{
     display: inline-block;
     margin-right: 50px;
     color: white;
@@ -35,7 +39,11 @@
     font-family: 'Montserrat', sans-serif;
 }
 
-.menu li:nth-child(3) {
+.main-menu li:hover {
+    color: yellow;
+}
+
+.main-menu li:nth-child(3) {
     margin-right: 100px;
 }
 
@@ -43,12 +51,17 @@
     flex-grow: 0.7;
 }
 
-.first-body{
-    display: flex;
-    justify-content: center;
-    height: 55%;
-    align-items: center;
+.main-body{
+    width: 100%;
+    height: 80%;
     color: white;
-    font-size: 2em;
+    font-size: 4em;
     font-family: 'Nanum Pen Script', cursive;
+    text-align: center;
+    margin: auto;
+}
+
+.main-catchphrase{
+    display: inline-block;
+    margin: auto ;
 }
