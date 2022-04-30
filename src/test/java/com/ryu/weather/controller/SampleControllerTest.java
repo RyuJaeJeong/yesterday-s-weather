@@ -1,24 +1,17 @@
 package com.ryu.weather.controller;
 
 import com.ryu.weather.common.Util;
-import jdk.nashorn.internal.parser.JSONParser;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Test;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.Calendar;
-import java.util.Date;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 public class SampleControllerTest {
 
@@ -40,9 +33,9 @@ public class SampleControllerTest {
         /*06시 발표(정시단위) */
         urlBuilder.append("&" + URLEncoder.encode("base_time","UTF-8") + "=" + URLEncoder.encode("0500", "UTF-8"));
         /*예보지점의 X 좌표값*/
-        urlBuilder.append("&" + URLEncoder.encode("nx","UTF-8") + "=" + URLEncoder.encode("88", "UTF-8"));
+        urlBuilder.append("&" + URLEncoder.encode("nx","UTF-8") + "=" + URLEncoder.encode("088", "UTF-8"));
         /*예보지점의 Y 좌표값*/
-        urlBuilder.append("&" + URLEncoder.encode("ny","UTF-8") + "=" + URLEncoder.encode("89", "UTF-8"));
+        urlBuilder.append("&" + URLEncoder.encode("ny","UTF-8") + "=" + URLEncoder.encode("089", "UTF-8"));
 
         URL url = new URL(urlBuilder.toString());
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -65,11 +58,8 @@ public class SampleControllerTest {
         rd.close();
         conn.disconnect();
 
-
-
         try {
             String str = sb.toString();
-            //System.out.println(str);
             JSONObject obj = new JSONObject(str);
             obj = (JSONObject) obj.get("response");
             obj = (JSONObject) obj.get("body");
@@ -78,10 +68,6 @@ public class SampleControllerTest {
 
             for (int i = 0; i < array.length(); i++){
                 obj = (JSONObject) array.get(i);
-//              System.out.print(obj.get("fcstDate") + ",");
-//              System.out.print(obj.get("fcstTime") + ",");
-//              System.out.print(obj.get("category") + ",");
-//              System.out.println(obj.get("fcstValue"));
                 if(obj.get("fcstDate").equals(Util.getSomeDayMore(1))) {
                     System.out.print(obj.get("category") + ",");
                     System.out.println(obj.get("fcstValue"));
@@ -90,7 +76,6 @@ public class SampleControllerTest {
                 if(obj.get("fcstDate").equals(Util.getSomeDayMore(2))) {
                     break;
                 }
-
             }
         } catch (JSONException e) {
             e.printStackTrace();
