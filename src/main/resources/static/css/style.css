@@ -39,8 +39,10 @@
     font-family: 'Montserrat', sans-serif;
 }
 
+
 .main-menu li:hover {
     color: yellow;
+    cursor: pointer;
 }
 
 .main-menu li:nth-child(3) {
