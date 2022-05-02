@@ -34,13 +34,19 @@
 .main-menu li{
     display: inline-block;
     margin-right: 50px;
+}
+
+.main-menu li a:link, .main-menu li a:visited{
     color: white;
     font-size: 1.25em;
+    text-decoration:none;
     font-family: 'Montserrat', sans-serif;
 }
 
 
-.main-menu li:hover {
+
+
+.main-menu li:hover a:link:hover, .main-menu li:hover a:visited:hover {
     color: yellow;
     cursor: pointer;
 }
@@ -66,4 +72,47 @@
 .main-catchphrase{
     display: inline-block;
     margin: auto ;
+}
+
+.yesterday-wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1px;
+    width: 100%;
+    height: 100%;
+    color: white;
+    font-size: 32px;
+    text-align: center;
+    background-color: #c2ccee;
+}
+
+.today-wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1px;
+    width: 100%;
+    height: 100%;
+    color: white;
+    font-size: 32px;
+    text-align: center;
+    background-color: #eee4c2;
+}
+
+.tommorow-wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1px;
+    width: 100%;
+    height: 100%;
+    color: white;
+    font-size: 32px;
+    text-align: center;
+    background-color: #eec2c2;
+}
+
+.str{
+    margin: auto;
 }
