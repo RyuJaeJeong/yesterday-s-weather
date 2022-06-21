@@ -12,7 +12,6 @@ import java.util.stream.Collectors;
 
 @Service
 public class LocationService {
-
     @Autowired
     LocationRepository repository;
 
@@ -22,12 +21,11 @@ public class LocationService {
     //지역정보를 추가
     public void insertLocation(LocationDTO dto) {
         LocationEntity entity = modelMapper.map(dto, LocationEntity.class);
-        System.out.println("=========================================");
-        System.out.println(repository.save(entity));
+        repository.save(entity);
     }
 
     //위치좌표 리스트를 불러옴.
-    public List<LocationDTO> getLocations() {
+    public List<LocationDTO> getLocationAll() {
         List<LocationEntity> entityList  = repository.findAll();
         List<LocationDTO> dtoList = entityList.stream().map(LocationEntity->modelMapper.map(LocationEntity, LocationDTO.class)).collect(Collectors.toList());
         return dtoList;

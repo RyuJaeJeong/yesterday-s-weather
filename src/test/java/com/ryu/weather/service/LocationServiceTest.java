@@ -25,7 +25,7 @@ class LocationServiceTest {
 
     @Test
     void getLocations() {
-        List<LocationDTO> list = service.getLocations();
+        List<LocationDTO> list = service.getLocationAll();
         for (int i=0; i<list.size(); i++) {
             System.out.print(list.get(i).getName() + " : ");
             System.out.println(list.get(i).getCoordinate());

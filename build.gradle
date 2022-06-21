@@ -29,6 +29,7 @@ dependencies {
     implementation 'org.testng:testng:7.5'
     // https://mvnrepository.com/artifact/org.json/json
     implementation 'org.json:json:20220320'
+    providedCompile group: 'org.projectlombok', name: 'lombok'
     implementation 'junit:junit'
     runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
     providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
