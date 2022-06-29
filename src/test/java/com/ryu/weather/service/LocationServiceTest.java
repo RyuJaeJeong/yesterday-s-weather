@@ -19,7 +19,7 @@ class LocationServiceTest {
 
     @Test
     void insertLocation(){
-        LocationDTO dto = new LocationDTO("144123", "독도");
+        LocationDTO dto = new LocationDTO("144123", "dokdo");
         service.insertLocation(dto);
     }
 

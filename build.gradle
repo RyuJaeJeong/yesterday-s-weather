@@ -32,6 +32,7 @@ dependencies {
     //스케쥴러
     testImplementation 'org.awaitility:awaitility:3.1.2'
     providedCompile group: 'org.projectlombok', name: 'lombok'
+    annotationProcessor('org.projectlombok:lombok') // 추가
     implementation 'junit:junit'
     runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
     providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'

@@ -10,7 +10,7 @@ import java.io.Serializable;
 @Data
 public class ForecastId implements Serializable {
 
-    @Column(columnDefinition = "varchar(6)", name="coordiname")
+    @Column(columnDefinition = "varchar(6)", name="coordinte")
     private String coordinate;
 
     @Column(columnDefinition = "varchar(8)", name="fcstDate")

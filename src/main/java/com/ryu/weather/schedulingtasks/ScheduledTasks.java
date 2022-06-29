@@ -8,7 +8,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-
 import java.io.IOException;
 import java.util.List;
 
@@ -35,8 +34,8 @@ public class ScheduledTasks {
                     String time = forc.getForecastId().getFcstTime();
 
                     if(time.equals("0600")||time.equals("1200")||
-                            time.equals("1500")||time.equals("1800")||
-                            time.equals("2300")){
+                       time.equals("1500")||time.equals("1800")||
+                       time.equals("2300")){
                         forecast.insertForecast(forc);
                     }  //END if
                 }  //END for
@@ -45,5 +44,4 @@ public class ScheduledTasks {
             e.printStackTrace();
         }
     }
-
 }

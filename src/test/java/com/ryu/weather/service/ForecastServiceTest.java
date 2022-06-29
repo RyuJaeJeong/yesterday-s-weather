@@ -1,5 +1,6 @@
 package com.ryu.weather.service;
 
+import com.ryu.weather.common.Util;
 import com.ryu.weather.dto.ForecastDTO;
 import com.ryu.weather.dto.LocationDTO;
 import com.ryu.weather.entity.LocationEntity;
