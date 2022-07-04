@@ -35,7 +35,7 @@ class ForecastServiceTest {
         for(LocationDTO loc:locations){
             List<ForecastDTO> forecasts = forecast.getForecastFromApi(loc.getCoordinate());
             for (ForecastDTO forc: forecasts) {
-                String time = forc.getForecastId().getFcstTime();
+                String time = forc.getFcstTime();
 
                 if(time.equals("0600")||time.equals("1200")||
                    time.equals("1500")||time.equals("1800")||
@@ -51,7 +51,7 @@ class ForecastServiceTest {
     void getForecastFromApi() throws IOException {
         List<ForecastDTO> list = forecast.getForecastFromApi("088089");
         for (ForecastDTO dto:list){
-            System.out.println(dto.toString());
+            forecast.insertForecast(dto);
         }
     }
 }

@@ -10,7 +10,9 @@ import lombok.*;
 public class ForecastDTO {
 
     //field
-    private ForecastId forecastId;   //키값(위치값, 예보날짜, 예보시간)
+    private String coordinate;
+    private String fcstDate;
+    private String fcstTime;
     private String TMP;         //1시간 기온 도
     private String UUU;         //풍속(동서성분)  m/s
     private String VVV;         //풍속(남북성분)  m/s

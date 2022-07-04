@@ -16,7 +16,7 @@ public class ForecastId implements Serializable {
     @Column(columnDefinition = "varchar(8)", name="fcstDate")
     private String fcstDate;
 
-    @Column(columnDefinition = "varchar(8)", name="fcstTime")
+    @Column(columnDefinition = "varchar(4)", name="fcstTime")
     private String fcstTime;
 
 }

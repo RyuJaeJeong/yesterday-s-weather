@@ -11,6 +11,8 @@ import org.json.JSONObject;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.print.attribute.standard.Destination;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -99,10 +101,9 @@ public class ForecastService {
                         if(obj.get("fcstTime").equals("0600")||obj.get("fcstTime").equals("1500")){
 
                             if(obj.get("category").equals("TMN")||obj.get("category").equals("TMX")){
-                                id.setFcstTime(obj.get("fcstTime").toString());
-                                id.setFcstDate(obj.get("fcstDate").toString());
-                                id.setCoordinate(where);
-                                dto.setForecastId(id);
+                                dto.setCoordinate(where);
+                                dto.setFcstDate(obj.get("fcstDate").toString());
+                                dto.setFcstTime(obj.get("fcstTime").toString());
                                 list.add(dto);
                                 i+=12;
                                 break;
@@ -112,10 +113,9 @@ public class ForecastService {
 
                         }else {
                             if(obj.get("category").equals("SNO")){
-                                id.setFcstTime(obj.get("fcstTime").toString());
-                                id.setFcstDate(obj.get("fcstDate").toString());
-                                id.setCoordinate(where);
-                                dto.setForecastId(id);
+                                dto.setCoordinate(where);
+                                dto.setFcstDate(obj.get("fcstDate").toString());
+                                dto.setFcstTime(obj.get("fcstTime").toString());
                                 list.add(dto);
                                 i+=11;
                                 break;
@@ -142,7 +142,14 @@ public class ForecastService {
     }
 
     public void insertForecast(ForecastDTO dto){
+        modelMapper.typeMap(ForecastDTO.class, ForecastEntity.class).addMappings(mapper ->{     //매핑규칙추가.
+            mapper.<String>map(src -> src.getCoordinate(), (destination, value) -> destination.getForecastId().setCoordinate(value));
+            mapper.<String>map(src -> src.getFcstDate(), (destination, value) -> destination.getForecastId().setFcstDate(value));
+            mapper.<String>map(src -> src.getFcstTime(), (destination, value) -> destination.getForecastId().setFcstTime(value));
+        });
+
         ForecastEntity entity = modelMapper.map(dto, ForecastEntity.class);
+
         repository.save(entity);
     }
 
