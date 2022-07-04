@@ -10,5 +10,5 @@
 </p>
 
 <div style="text-align:center;">
-  <img src="./README/scheduler.png" style="width:900px; height:600px; align-items:center;"/>
+  <img src="./README/scheduler.png" style="width:900px; height:600px; display:inline-block; margin:auto "/>
 </div>
