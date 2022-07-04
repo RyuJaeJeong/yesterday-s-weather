@@ -10,3 +10,7 @@
 </p>
 
 <img src="./README/scheduler.png" style="width:900px; height:40%; display:inline-block; margin:auto "/>
+
+<p>
+매일 일정한 시간에 로직을 수행하기 위해 Spring Scheduler에 cron식을 사용하여 매일 아침 6시에 데이터가 저장되도록 하였습니다.
+</p>
