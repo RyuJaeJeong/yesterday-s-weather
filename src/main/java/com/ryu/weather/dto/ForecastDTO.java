@@ -1,6 +1,6 @@
 package com.ryu.weather.dto;
 
-import com.ryu.weather.entity.ForecastId;
+
 import lombok.*;
 
 //단기예보
@@ -11,6 +11,7 @@ public class ForecastDTO {
 
     //field
     private String coordinate;
+    private String locationName;
     private String fcstDate;
     private String fcstTime;
     private String TMP;         //1시간 기온 도
@@ -27,5 +28,6 @@ public class ForecastDTO {
     private String SNO;         //1시간 신적설
     private String TMN;         //1시간 최저기온 도
     private String TMX;         //1시간 최고기온 도
+
 
 }
