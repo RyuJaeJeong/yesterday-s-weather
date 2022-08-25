@@ -24,4 +24,5 @@
 1) 복합키 ENTITY <-> DTO 간 매핑이 되지 않던 문제 -> modelMapper의 Deep Mapping을 통해 해결(http://modelmapper.org/user-manual/)<br>
 2) 서버DB에 외부에서 접속되지 않던 문제 -> 에러로그 확인 결과 네트워크 설정 관련 문제로 추정, EC2 보안규칙 란에서 3306포트 인바운드 규칙을 추가하여 해결<br> 
 3) 서버프로그램 실행 후, 로그가 별도의 파일로 남지 않던 문제 -> 로그 파일이 별도로 추가되도록 세팅 추가<br>
+4) 예보 조회시, 지역명을 함께 볼 수 없던 문제 -> ENTITY 수정 및 JPQL의 fetch JOIN 이용해 구현 
 </p>  
