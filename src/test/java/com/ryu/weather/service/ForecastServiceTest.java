@@ -28,7 +28,7 @@ class ForecastServiceTest {
     void insertForecast() throws IOException {
         List<LocationDTO> locations = location.getLocationAll();
         for(LocationDTO loc:locations){
-            List<ForecastDTO> forecasts = forecast.getForecastFromApi(loc.getCoordinate());
+            List<ForecastDTO> forecasts = forecast.getForecastFromApi(loc.getFcstCoordinate());
             for (ForecastDTO forc: forecasts) {
                 String time = forc.getFcstTime();
                 if(time.equals("0600")||time.equals("1200")||

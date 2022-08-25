@@ -28,7 +28,7 @@ public class ScheduledTasks {
         try {
             List<LocationDTO> locations = location.getLocationAll();
             for(LocationDTO loc : locations){
-                List<ForecastDTO> forecasts = forecast.getForecastFromApi(loc.getCoordinate());
+                List<ForecastDTO> forecasts = forecast.getForecastFromApi(loc.getFcstCoordinate());
                 for (ForecastDTO forc: forecasts) {
                     String time = forc.getFcstTime();
 

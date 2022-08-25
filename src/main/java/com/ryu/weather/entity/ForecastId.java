@@ -13,7 +13,7 @@ import java.io.Serializable;
 public class ForecastId implements Serializable {
 
     @ManyToOne
-    @JoinColumn(name="coordinate")
+    @JoinColumn(name="fcstCoordinate")
     private LocationEntity location;
 
     @Column(columnDefinition = "varchar(8)", name="fcstDate")

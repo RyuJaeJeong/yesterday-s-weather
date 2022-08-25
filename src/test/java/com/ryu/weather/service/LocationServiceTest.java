@@ -17,7 +17,7 @@ class LocationServiceTest {
     @Autowired
     LocationService service;
 
-    @Test
+    /*@Test
     void insertLocation(){
         LocationDTO dto = new LocationDTO("144123", "dokdo");
         service.insertLocation(dto);
@@ -30,12 +30,12 @@ class LocationServiceTest {
             System.out.print(list.get(i).getName() + " : ");
             System.out.println(list.get(i).getCoordinate());
         }
-    }
+    }*/
 
-    @Test
+    /*@Test
     void getLocation() {
         System.out.println(service.getLocation("052038").toString());
-    }
+    }*/
 
 
 }

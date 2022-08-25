@@ -3,12 +3,12 @@ package com.ryu.weather.dto;
 import lombok.*;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class LocationDTO {
 
     //field
-    private String coordinate;
+    private String fcstCoordinate;
+    private String weatherCoordinate;
     private String name;
 
 }

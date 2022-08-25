@@ -15,12 +15,6 @@ public class ForecastEntity {
     private String TMP;
 
     @Column(columnDefinition = "varchar(10)", nullable = true)
-    private String UUU;
-
-    @Column(columnDefinition = "varchar(10)", nullable = true)
-    private String VVV;
-
-    @Column(columnDefinition = "varchar(10)", nullable = true)
     private String VEC;
 
     @Column(columnDefinition = "varchar(10)", nullable = true)
@@ -36,11 +30,8 @@ public class ForecastEntity {
     private String POP;
 
     @Column(columnDefinition = "varchar(10)", nullable = true)
-    private String WAV;
-
-    @Column(columnDefinition = "varchar(10)", nullable = true)
     private String PCP;
-
+    
     @Column(columnDefinition = "varchar(10)", nullable = true)
     private String REH;
 

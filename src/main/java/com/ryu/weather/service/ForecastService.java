@@ -19,6 +19,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,7 +34,7 @@ public class ForecastService {
     //일기예보를 입력하는 메서드
     public void insertForecast(ForecastDTO dto){
         modelMapper.typeMap(ForecastDTO.class, ForecastEntity.class).addMappings(mapper ->{     //매핑규칙추가.
-            mapper.<String>map(src -> src.getCoordinate(), (destination, value) -> destination.getForecastId().getLocation().setCoordinate(value));
+            mapper.<String>map(src -> src.getCoordinate(), (destination, value) -> destination.getForecastId().getLocation().setFcstCoordinate(value));
             mapper.<String>map(src -> src.getFcstDate(), (destination, value) -> destination.getForecastId().setFcstDate(value));
             mapper.<String>map(src -> src.getFcstTime(), (destination, value) -> destination.getForecastId().setFcstTime(value));
         });
@@ -102,9 +103,10 @@ public class ForecastService {
                                 case "TMP" : dto.setTMP(obj.get("fcstValue").toString()); break;
                                 case "TMN" : dto.setTMN(obj.get("fcstValue").toString()); break;
                                 case "TMX" : dto.setTMX(obj.get("fcstValue").toString()); break;
-                                case "UUU" : dto.setUUU(obj.get("fcstValue").toString()); break;
-                                case "VVV" : dto.setVVV(obj.get("fcstValue").toString()); break;
-                                case "WAV" : dto.setWAV(obj.get("fcstValue").toString()); break;
+                                case "UUU" :
+                                case "VVV" :
+                                case "WAV" :
+                                    break;
                                 case "VEC" : dto.setVEC(obj.get("fcstValue").toString()); break;
                                 case "WSD" : dto.setWSD(obj.get("fcstValue").toString()); break;
                             }
@@ -156,7 +158,7 @@ public class ForecastService {
     public List<ForecastDTO> getForecast(String when, String where) throws IOException {
         List<ForecastEntity> entityList = repository.findByForecastId_Location_CoordinateAndForecastIdFcstDate(when, where);
         modelMapper.typeMap(ForecastEntity.class, ForecastDTO.class).addMappings(mapper ->{     //매핑규칙추가.
-            mapper.<String>map(src -> src.getForecastId().getLocation().getCoordinate(), (destination, value) -> destination.setCoordinate(value));
+            mapper.<String>map(src -> src.getForecastId().getLocation().getFcstCoordinate(), (destination, value) -> destination.setCoordinate(value));
             mapper.<String>map(src -> src.getForecastId().getLocation().getName(), (destination, value) -> destination.setLocationName(value));
             mapper.<String>map(src -> src.getForecastId().getFcstDate(), (destination, value) -> destination.setFcstDate(value));
             mapper.<String>map(src -> src.getForecastId().getFcstTime(), (destination, value) -> destination.setFcstTime(value));
