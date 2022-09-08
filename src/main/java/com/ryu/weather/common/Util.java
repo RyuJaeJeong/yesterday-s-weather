@@ -4,11 +4,10 @@ import java.util.Calendar;
 
 public class Util {
 
+    public final static String forecastServiceKey = "2KFAsAFNHzs%2FCIakKfPNyRft%2BsAxNov7i1inpO7f1qxlJ8CXFp5P6KRmBSi%2FuBnpJZdG952jW%2FPnidC76%2FYwbw%3D%3D";
 
-    //서비스키 반환
-    public static String getServiceKey() {
-        return "2KFAsAFNHzs%2FCIakKfPNyRft%2BsAxNov7i1inpO7f1qxlJ8CXFp5P6KRmBSi%2FuBnpJZdG952jW%2FPnidC76%2FYwbw%3D%3D";
-    }
+    public final static String weatherServiceKey = "2KFAsAFNHzs%2FCIakKfPNyRft%2BsAxNov7i1inpO7f1qxlJ8CXFp5P6KRmBSi%2FuBnpJZdG952jW%2FPnidC76%2FYwbw%3D%3D";
+
 
     //오늘 날짜 반환 YYYYMMDD 형식
     public static String getToday() {

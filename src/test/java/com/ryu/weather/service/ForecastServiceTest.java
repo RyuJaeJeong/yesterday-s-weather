@@ -51,7 +51,7 @@ class ForecastServiceTest {
     @Test
     void getForecast() throws IOException {
         System.out.println(System.currentTimeMillis());
-        List<ForecastDTO> list = forecast.getForecast("20220824", "089091");
+        List<ForecastDTO> list = forecast.getForecast("20220826", "090091");
         for (ForecastDTO dto:list){
             System.out.println(dto.toString());
         }

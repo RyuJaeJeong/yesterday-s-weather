@@ -23,8 +23,8 @@ public class ForecastDTO {
     private String PCP;         //1시간 강수량
     private String REH;         //습도 %
     private String SNO;         //1시간 신적설
-    private String TMN;         //1시간 최저기온 도
-    private String TMX;         //1시간 최고기온 도
+    private String TMN;         //최저기온 도
+    private String TMX;         //최고기온 도
 
 
 }

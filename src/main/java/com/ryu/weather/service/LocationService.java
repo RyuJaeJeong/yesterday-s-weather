@@ -26,7 +26,7 @@ public class LocationService {
 
     //위치좌표 리스트를 불러옴.
     public List<LocationDTO> getLocationAll() {
-        List<LocationEntity> entityList  = repository.findFcstCoordinate();
+        List<LocationEntity> entityList  = repository.findAll();
         List<LocationDTO> dtoList = entityList.stream().map(LocationEntity->modelMapper.map(LocationEntity, LocationDTO.class)).collect(Collectors.toList());
         return dtoList;
     }
