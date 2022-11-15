@@ -8,10 +8,79 @@
   src:url(/font/NanumPenScript-Regular.ttf) format('truetype');
 }
 
+
+/**********************************************
+  navi start
+**********************************************/
+
+#navigation{
+  padding-left: 10%;
+  padding-right: 10%;
+}
+
+
+#logo, #logo-menu{
+  font-family: 'NanumPenScript-Regular';
+  font-size: 2em;
+}
+
+.menu-1, .menu-2,
+.menu-3{
+  font-family: 'NanumPenScript-Regular';
+  font-size: 2.5em;
+}
+
+.menu-1,
+.menu-2,
+.menu-3{
+  margin-left: 100px;
+}
+
+
+
+.menu-1:hover,
+.menu-2:hover,
+.menu-3:hover{
+  color: #ffc107 !important;
+}
+
 i {
   display: inline-block;
   margin-right : 0.5em;
 }
+
+@media screen and (max-width: 768px) {
+
+  #logo{
+    font-size: 1.5em;
+  }
+
+  #navigation{
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+
+  .menu-1,
+  .menu-2,
+  .menu-3{
+    font-size: 2em;
+    margin-left: 0px;
+  }
+
+
+
+}
+
+/**********************************************
+  navi end
+**********************************************/
+
+
+
+/**********************************************
+  home start
+**********************************************/
+
 
 #home-container{
   width: 100%;
@@ -36,43 +105,7 @@ i {
 
 }
 
-#navigation{
-  padding-left: 10%;
-  padding-right: 10%;
-}
-
-
-#logo{
-  font-family: 'NanumPenScript-Regular';
-  font-size: 2em;
-}
-
-#menu-1, #menu-2,
-#menu-3{
-  font-family: 'NanumPenScript-Regular';
-  font-size: 2.5em;
-}
-
-#menu-1:hover, #menu-2:hover, #menu-3:hover{
-   color: yellow !important;
-}
-
 @media screen and (max-width: 768px) {
-
-  #logo{
-    font-size: 1.5em;
-  }
-
-  #navigation{
-    padding-left: 5%;
-    padding-right: 5%;
-  }
-
-  #menu-1, #menu-2,
-  #menu-3{
-    font-size: 2em;
-  }
-
   #home-container{
     background-position: 53% 25%;
 
@@ -90,3 +123,56 @@ i {
   }
 
 }
+
+
+/**********************************************
+  home end
+**********************************************/
+
+
+/**********************************************
+  yesterday start
+**********************************************/
+#yesterday-container{
+  height: 100VH;
+  background: -webkit-linear-gradient(to bottom, #84A8E6, #5F96CF, #84A8E6);
+  background: -moz-linear-gradient(to bottom, #84A8E6, #5F96CF, #84A8E6);
+  background: -ms-linear-gradient(to bottom, #84A8E6, #5F96CF, #84A8E6);
+  background: -o-linear-gradient(to bottom, #84A8E6, #5F96CF, #84A8E6);
+  background: linear-gradient(to bottom, #84A8E6, #5F96CF, #84A8E6);
+
+  input[type='date']{
+    border: 3px solid white;
+    background-color: #84A8E6;
+    color: white;
+    font-weight: bolder;
+  }
+
+  select{
+    border: 3px solid white;
+    background-color: #84A8E6;
+    color: white;
+    font-weight: bolder;
+  }
+
+  .input-group{
+    padding-left: 10% !important;
+    padding-right: 10% !important;
+  }
+
+}
+
+@media screen and (max-width: 768px) {
+  #yesterday-container{
+    .input-group{
+      padding-left: 0% !important;
+      padding-right: 0% !important;
+    }
+  }
+}
+
+
+/**********************************************
+  yesterday end
+**********************************************/
+

@@ -6,38 +6,47 @@ import com.ryu.weather.repository.LocationRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class LocationService {
+
+    // field
+    private LocationRepository repository;
+
+
+    // cons
     @Autowired
-    LocationRepository repository;
+    public LocationService(LocationRepository repository) {
+        this.repository = repository;
+    }
 
-    //entity와 dto클래스를 매핑시켜주는 역활을 함
-    ModelMapper modelMapper = new ModelMapper();
 
-    //지역정보를 추가
+    // method
+
+    /**
+     * 지역정보를 추가
+     * @param dto 지역정보 객체
+     * fcstCoordinate
+     * weatherCoordinate
+     * name
+     */
     public void insertLocation(LocationDTO dto) {
+        ModelMapper modelMapper = new ModelMapper();
         LocationEntity entity = modelMapper.map(dto, LocationEntity.class);
         repository.save(entity);
     }
 
-    //위치좌표 리스트를 불러옴.
+    /**
+     * 지역정보를 모두 불러옮
+     * @return 지역정보 리스트
+     */
     public List<LocationDTO> getLocationAll() {
+        ModelMapper modelMapper = new ModelMapper();
         List<LocationEntity> entityList  = repository.findAll();
         List<LocationDTO> dtoList = entityList.stream().map(LocationEntity->modelMapper.map(LocationEntity, LocationDTO.class)).collect(Collectors.toList());
         return dtoList;
     }
-
-    /*//위치좌표를 받아 지역명을 불러옴.
-    public LocationDTO getLocation(String coordinate){
-        LocationEntity entity = repository.findById(coordinate).get();
-        LocationDTO dto = modelMapper.map(entity, LocationDTO.class);
-        return dto;
-    }*/
-
-
 
 }

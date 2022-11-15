@@ -5,7 +5,6 @@ import java.util.Calendar;
 public class Util {
 
     public final static String forecastServiceKey = "2KFAsAFNHzs%2FCIakKfPNyRft%2BsAxNov7i1inpO7f1qxlJ8CXFp5P6KRmBSi%2FuBnpJZdG952jW%2FPnidC76%2FYwbw%3D%3D";
-
     public final static String weatherServiceKey = "2KFAsAFNHzs%2FCIakKfPNyRft%2BsAxNov7i1inpO7f1qxlJ8CXFp5P6KRmBSi%2FuBnpJZdG952jW%2FPnidC76%2FYwbw%3D%3D";
 
 

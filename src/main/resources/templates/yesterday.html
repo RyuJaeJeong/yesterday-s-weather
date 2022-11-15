@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:replace="~{/fragments/common.html :: frg_head}"></head>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div id="yesterday-container" class="container-fluid p-0">
+  <div th:replace="~{/fragments/common.html :: frg_navbar}"></div>
+  <div id="search-condition" class="input-group mb-3 mt-3 mt-md-0">
+    <select id="location" class="form-control mx-2 rounded" ></select>
+    <input type="date" class="form-control mx-2 rounded" >
+  </div>
+
+</div>
+
+<script th:replace="~{/fragments/common.html :: script}"></script>
+<script>
+    document.querySelectorAll('.menu-1')[0].classList.add('text-warning');
+    document.querySelectorAll('.menu-1')[1].classList.add('text-warning');
+
+    <!-- 모바일 메뉴 클릭 시 display:block되도록 -->
+    document.querySelector('.navbar-toggler').addEventListener('click', function(){
+        document.querySelector('#navbarNav').classList.add('d-block');
+    })
+
+    Util.setForm()
+</script>
+</body>
+</html>

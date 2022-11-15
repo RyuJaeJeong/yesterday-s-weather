@@ -28,13 +28,20 @@ import java.util.stream.Collectors;
 @Slf4j
 public class ForecastService {
 
+
+    private final ForecastRepository forecastRepository;
+    private ModelMapper modelMapper = new ModelMapper();
+
     @Autowired
-    ForecastRepository repository;
-    ModelMapper modelMapper = new ModelMapper();
+    public ForecastService(ForecastRepository forecastRepository) {
+        this.forecastRepository = forecastRepository;
+    }
 
-    //일기예보를 입력하는 메서드
+    /**
+     * 일기예보를 DB에 입력하는 메서드
+     * @param dto api로 부터 받아온 일기예보 데이터
+     */
     public void insertForecast(ForecastDTO dto){
-
         try {
             modelMapper.typeMap(ForecastDTO.class, ForecastEntity.class).addMappings(mapper ->{     //매핑규칙추가.
                 mapper.<String>map(src -> src.getCoordinate(), (destination, value) -> destination.getForecastId().getLocation().setFcstCoordinate(value));
@@ -42,16 +49,19 @@ public class ForecastService {
                 mapper.<String>map(src -> src.getFcstTime(), (destination, value) -> destination.getForecastId().setFcstTime(value));
             });
             ForecastEntity entity = modelMapper.map(dto, ForecastEntity.class);
-            repository.save(entity);
+            forecastRepository.save(entity);
         }catch (Exception e){
             e.printStackTrace();
         }
 
     }
 
-    //위치 좌표를 받아서 내일의 시간 별 날씨데이터를 리스트로 리턴해준다.
-    //API에서 오늘 예보된 기상예보만 조회 해 올수있음 ==> 오늘날짜로 base_date 고정
-    //행이 너무 많음 ==> 6, 9, 12, 15, 18, 21시의 데이터만 받아 오도록 고정
+
+    /**
+     * 위치 좌표를 받아서 api로 부터 내일의 시간 별 날씨데이터를 리스트로 리턴해준다.
+     * @param where 날씨데이터를 조회 할 위치 좌표
+     * @return 시간별 날씨 데이터 리턴 값
+     */
     public List<ForecastDTO> getForecastFromApi(String where) {
         List list = new ArrayList();
 
@@ -70,7 +80,6 @@ public class ForecastService {
               HttpURLConnection conn = (HttpURLConnection) url.openConnection();
               conn.setRequestMethod("GET");
               conn.setRequestProperty("Content-type", "application/json");
-              System.out.println("Response code: " + conn.getResponseCode());
 
               BufferedReader rd;
               if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
@@ -157,10 +166,16 @@ public class ForecastService {
         return list;
     }
 
+    /**
+     * DB에서 ~
+     * @param when 위치 좌표
+     * @param where 언제
+     * @return
+     */
     public List<ForecastDTO> getForecast(String when, String where) {
         List<ForecastDTO> dtoList = new ArrayList<>();
         try{
-            List<ForecastEntity> entityList = repository.findByForecastId_Location_CoordinateAndForecastIdFcstDate(when, where);
+            List<ForecastEntity> entityList = forecastRepository.findByForecastId_Location_CoordinateAndForecastIdFcstDate(when, where);
             modelMapper.typeMap(ForecastEntity.class, ForecastDTO.class).addMappings(mapper ->{     //매핑규칙추가.
                 mapper.<String>map(src -> src.getForecastId().getLocation().getFcstCoordinate(), (destination, value) -> destination.setCoordinate(value));
                 mapper.<String>map(src -> src.getForecastId().getLocation().getName(), (destination, value) -> destination.setLocationName(value));

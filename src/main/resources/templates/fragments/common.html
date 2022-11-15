@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:fragment="frg_head">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta property="og:image" content="/static/img/bg.jpeg">
+    <meta property="og:description" content="어제의 날씨입니다.">
+    <meta property="og:title" content="어제의 날씨">
+    <!-- font-awsome -->
+    <link rel="stylesheet" href="/@fontawesome/fontawesome-free/css/all.min.css">
+    <!-- bootstrap@5.2.1 -->
+    <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.min.css">
+    <!-- css -->
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="shortcut icon" href="#">
+    <style>
+
+    </style>
+    <title>어제의 날씨</title>
+</head>
+<body>
+
+    <nav th:fragment="frg_navbar" class="navbar navbar-dark navbar-expand-lg py-md-3"  id="navigation">
+            <a class="navbar-brand text-light"  href="/">
+                <i class="fa-solid fa-umbrella" style="font-size: 1.75em;"></i><span id="logo">어제의 날씨</span>
+            </a>
+            <button class="navbar-toggler border-light" type="button"  data-bs-toggle="modal" data-bs-target="#exampleModal" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon border-light text-light"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link menu-1"  href="/yesterday">어제</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link menu-2" href="#">오늘</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link menu-3" href="#">내일</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <i class="fa-solid fa-umbrella" style="font-size: 1.75em;"></i>
+                        </div>
+                        <div class="modal-body">
+                            <div class="collapse navbar-collapse justify-content-end " id="navbarNav">
+                                <ul class="navbar-nav">
+                                    <li class="nav-item mx-md-5">
+                                        <a class="nav-link text-dark menu-1"  href="/yesterday">
+                                            어제
+                                        </a>
+                                    </li>
+                                    <li class="nav-item mx-md-5">
+                                        <a class="nav-link text-dark menu-2"  href="#">
+                                            오늘
+                                        </a>
+                                    </li>
+                                    <li class="nav-item mx-md-5">
+                                        <a class="nav-link text-dark menu-3"  href="#">
+                                            내일
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </nav>
+    <th:block layout:fragment="script">
+        <script type="text/javascript" src="/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="/@fontawesome/fontawesome-free/js/all.min.js" crossorigin="anonymous"></script>
+        <script src="/js/common.js"></script>
+    </th:block>
+</body>
+</html>
