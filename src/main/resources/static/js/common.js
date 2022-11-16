@@ -22,6 +22,10 @@ const Util = {
             }
     },
 
+    addMinusChar(param){
+        console.log('hello, world');
+        return param.substring(0, 4) + "-" + param.substring(4, 6) + "-" + param.substring(6, 8)
+    },
 
     setForm(){
         // 지역정보 세팅
@@ -42,7 +46,7 @@ const Util = {
         // 어제날짜 세팅
         this.getAjax('/yesterdaysDate', '', 'GET', function (result){
             if(result.code == 200){
-                document.querySelector('input[type=\'date\']').value = result.data.substring(0, 4) + "-" + result.data.substring(4, 6) + "-" + result.data.substring(6, 8)
+                document.querySelector('input[type=\'date\']').value = Util.addMinusChar(result.data);
             }else{
                 alert(result.message);
             }
