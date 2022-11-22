@@ -30,16 +30,33 @@ public class WeatherService {
 
     //field
     private WeatherRepository weatherRepository;
-    private ModelMapper modelMapper = new ModelMapper();
+    private final ModelMapper mapperToEntity;
+    private final ModelMapper mapperToDTO;
 
     //cons
-    @Autowired
-    public WeatherService(WeatherRepository weatherRepository) {
+    public WeatherService(WeatherRepository weatherRepository, ModelMapper mapperToEntity, ModelMapper mapperToDTO) {
         this.weatherRepository = weatherRepository;
+
+        //매핑 규칙 추가
+        mapperToEntity.typeMap(WeatherDTO.class, WeatherEntity.class).addMappings(mapper ->{
+            mapper.map(src -> src.getLocationNo(), (destination, value) -> destination.getWeatherId().getLocation().setLocationNo((value==null)?0: (int) value));
+            mapper.<String>map(src -> src.getWeatherDate(), (destination, value) -> destination.getWeatherId().setWeatherDate(value));
+            mapper.<String>map(src -> src.getWeatherTime(), (destination, value) -> destination.getWeatherId().setWeatherTime(value));
+        });
+
+        mapperToDTO.typeMap(WeatherEntity.class, WeatherDTO.class).addMappings(mapper ->{
+            mapper.map(src -> src.getWeatherId().getLocation().getLocationNo(), (destination, value) -> destination.setLocationNo((value==null)?0: (int) value));
+            mapper.<String>map(src -> src.getWeatherId().getLocation().getName(), (destination, value) -> destination.setLocationName(value));
+            mapper.<String>map(src -> src.getWeatherId().getWeatherDate(), (destination, value) -> destination.setWeatherDate(value));
+            mapper.<String>map(src -> src.getWeatherId().getWeatherTime(), (destination, value) -> destination.setWeatherTime(value));
+        });
+
+        this.mapperToEntity = mapperToEntity;
+        this.mapperToDTO = mapperToDTO;
     }
 
-    //method
 
+    //method
     /**
      * api에서 일기예보 받아온다.
      * 언제? 어디서? 시간자료 받아올 시작 시간, 끝난 시간(최대 7시간 조회 가능)
@@ -111,14 +128,7 @@ public class WeatherService {
      * @param dto api로 부터 받아온 기상 시간자료 데이터
      */
     public void insertWeather(WeatherDTO dto){
-        modelMapper.typeMap(WeatherDTO.class, WeatherEntity.class).addMappings(mapper ->{     //매핑규칙추가.
-            mapper.<String>map(src -> src.getCoordinate(), (destination, value) -> destination.getWeatherId().getLocation().setWeatherCoordinate(value));
-            mapper.<String>map(src -> src.getCoordinate(), (destination, value) -> destination.getWeatherId().getLocation().setFcstCoordinate(value));
-            mapper.<String>map(src -> src.getWeatherDate(), (destination, value) -> destination.getWeatherId().setWeatherDate(value));
-            mapper.<String>map(src -> src.getWeatherTime(), (destination, value) -> destination.getWeatherId().setWeatherTime(value));
-        });
-        WeatherEntity entity = modelMapper.map(dto, WeatherEntity.class);
-        System.out.println(entity.toString());
+        WeatherEntity entity = mapperToEntity.map(dto, WeatherEntity.class);
         weatherRepository.save(entity);
     }
 

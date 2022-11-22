@@ -53,18 +53,15 @@ public class ForecastService {
         this.mapperToDTO = mapperToDTO;
     }
 
+
+    // method
     /**
      * 일기예보를 DB에 입력하는 메서드
      * @param dto api로 부터 받아온 일기예보 데이터
      */
     public void insertForecast(ForecastDTO dto){
-        try {
-            ForecastEntity entity = mapperToEntity.map(dto, ForecastEntity.class);
-            forecastRepository.save(entity);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
+        ForecastEntity entity = mapperToEntity.map(dto, ForecastEntity.class);
+        forecastRepository.save(entity);
     }
 
 
@@ -184,7 +181,7 @@ public class ForecastService {
      * @param where 언제
      * @return
      */
-    public List<ForecastDTO> getForecast(String when, String where) {
+    public List<ForecastDTO> getForecast(String when, int where) {
         List<ForecastDTO> dtoList = new ArrayList<>();
         try{
             List<ForecastEntity> entityList = forecastRepository.findByForecastId_Location_CoordinateAndForecastIdFcstDate(when, where);

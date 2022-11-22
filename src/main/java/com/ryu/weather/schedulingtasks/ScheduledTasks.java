@@ -5,8 +5,6 @@ import com.ryu.weather.dto.LocationDTO;
 import com.ryu.weather.service.ForecastService;
 import com.ryu.weather.service.LocationService;
 import lombok.extern.slf4j.Slf4j;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import java.io.IOException;
@@ -16,14 +14,17 @@ import java.util.List;
 @Slf4j
 public class ScheduledTasks {
 
-    @Autowired
-    ForecastService forecast;
-    @Autowired
-    LocationService location;
+    //field
+    private ForecastService forecast;
+    private LocationService location;
 
+    //cons
+    public ScheduledTasks(ForecastService forecast, LocationService location) {
+        this.forecast = forecast;
+        this.location = location;
+    }
 
-    //오전 6시 지정된 위치의 06시, 12시, 15시, 18시, 23시 일기예보 데이터를 DB로 저장하는 스케쥴러
-    @Scheduled(cron = "0 0 6 * * *")
+    @Scheduled(cron = "0 0 8 * * *")
     public void weatherScheduler() throws IOException {
         try {
             List<LocationDTO> locations = location.getLocationAll();
@@ -41,8 +42,6 @@ public class ScheduledTasks {
             } //END for
         }catch (Exception e){
             e.printStackTrace();
-            log.warn("scheduler error ");
-            log.info(String.valueOf(e));
         }
     }
 }

@@ -8,7 +8,8 @@ import lombok.*;
 public class WeatherDTO {
 
     //field
-    private String coordinate;      //지역좌표
+    private int locationNo;      //지역좌표
+    private String coordinate;
     private String locationName;    //stnNm
     private String weatherDate;     //tm[0]
     private String weatherTime;     //tm[1]

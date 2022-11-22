@@ -16,7 +16,6 @@ public class LocationService {
     private LocationRepository repository;
 
     // cons
-    @Autowired
     public LocationService(LocationRepository repository) {
         this.repository = repository;
     }

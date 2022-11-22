@@ -48,7 +48,7 @@ public class YesterdayController {
      * @return
      */
     @GetMapping(value = "/forecast/{when}/{location}" , produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<CommonResponse> getForecast(@PathVariable("when") String when, @PathVariable("location") String location){
+    public ResponseEntity<CommonResponse> getForecast(@PathVariable("when") String when, @PathVariable("location") int location){
         CommonResponse<List<ForecastDTO>> response = new CommonResponse<>();
         try{
             List<ForecastDTO> forecastList = forecastService.getForecast(when, location);
