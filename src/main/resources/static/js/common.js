@@ -3,9 +3,6 @@
 
 const Util = {
 
-
-
-
     getAjax(url, param, method, callback){
             const httpRequest = new XMLHttpRequest();
             httpRequest.open(method, url);
@@ -23,19 +20,23 @@ const Util = {
     },
 
     addMinusChar(param){
-        console.log('hello, world');
         return param.substring(0, 4) + "-" + param.substring(4, 6) + "-" + param.substring(6, 8)
+    },
+
+    removeMinusChar(param){
+        return param.replaceAll('-', '');
     },
 
     setForm(){
         // 지역정보 세팅
         this.getAjax('/locations', '', 'GET', function(result){
           if(result.code == 200){
-              let str = "<option value=\"none\">=== 선택 ===</option>";
+              let str = "<option value=\"\">=== 선택 ===</option>";
               const size = result.data.length;
               for (let i = 0; i < size; i++) {
                   const location = result.data[i];
-                  str += "<option data-value='{\"fcstCoordinate\":"+location.fcstCoordinate+", \"weatherCoordinate\":"+location.weatherCoordinate+"}'>"+ location.name+"</option>"
+                  const data = JSON.stringify({'fcstCoordinate':location.fcstCoordinate, 'weatherCoordinate':location.weatherCoordinate});
+                  str += "<option value='"+data+"'>"+ location.name+"</option>"
               }
               document.querySelector('#location').innerHTML = str;
           }else{
@@ -52,8 +53,6 @@ const Util = {
             }
         })
     },
-
-
 
 
 }

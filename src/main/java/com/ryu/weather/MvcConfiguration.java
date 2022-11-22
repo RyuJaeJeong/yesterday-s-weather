@@ -1,5 +1,7 @@
 package com.ryu.weather;
 
+import org.modelmapper.ModelMapper;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -22,7 +24,13 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
         registry.addResourceHandler("/bootstrap/**").addResourceLocations("classpath:/static/bootstrap/");
         registry.addResourceHandler("/@popperjs/**").addResourceLocations("classpath:/static/@popperjs/");
         registry.addResourceHandler("/@fontawesome/**").addResourceLocations("classpath:/static/@fontawesome/");
+        registry.addResourceHandler("/@toast-ui/**").addResourceLocations("classpath:/static/@toast-ui/");
 
+    }
+
+    @Bean
+    public ModelMapper modelMapper(){
+        return new ModelMapper();
     }
 
 }

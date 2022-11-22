@@ -1,32 +1,225 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-<head th:replace="~{/fragments/common.html :: frg_head}"></head>
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+<head th:replace="~{fragments/common.html :: frg_head}"></head>
 <body>
-
 <div id="yesterday-container" class="container-fluid p-0">
-  <div th:replace="~{/fragments/common.html :: frg_navbar}"></div>
-  <div id="search-condition" class="input-group mb-3 mt-3 mt-md-0">
+  <div th:replace="~{fragments/common.html :: frg_navbar}"></div>
+  <div id="search-condition" class="input-group mb-3 mt-3 mt-md-0 w-100">
     <select id="location" class="form-control mx-2 rounded" ></select>
     <input type="date" class="form-control mx-2 rounded" >
   </div>
-
+  <div class="row w-100 h-50 mb-3">
+      <div class="col-md-12 mx-md-2 p-0  rounded">
+        <div id="temperatureSheet" class="w-100 h-100"></div>
+      </div>
+  </div>
+  <div class="row w-100 h-25 justify-content-between">
+      <div class="col-md-2 ms-md-2 mb-md-0 mb-3 p-0  rounded">
+        1
+      </div>
+      <div class="col-md-2 p-0 mb-md-0 mb-3 rounded">
+        2
+      </div>
+      <div class="col-md-2 p-0 mb-md-0 mb-3 rounded">
+        3
+      </div>
+      <div class="col-md-2 p-0 mb-md-0 mb-3 rounded">
+        4
+      </div>
+  </div>
 </div>
 
-<script th:replace="~{/fragments/common.html :: script}"></script>
+<script th:replace="~{fragments/common.html :: script}"></script>
 <script>
-    document.querySelectorAll('.menu-1')[0].classList.add('text-warning');
-    document.querySelectorAll('.menu-1')[1].classList.add('text-warning');
 
-    <!-- 모바일 메뉴 클릭 시 display:block되도록 -->
-    document.querySelector('.navbar-toggler').addEventListener('click', function(){
-        document.querySelector('#navbarNav').classList.add('d-block');
-    })
+    const selectLocation = document.querySelector('#search-condition select');
+    const inputDate = document.querySelector('input[type=\'date\']');
+    let temperatureSheet;
+    document.addEventListener('DOMContentLoaded', function (){
+        init();
+        <!-- 모바일 메뉴 클릭 시 display:block되도록 -->
+        document.querySelector('.navbar-toggler').addEventListener('click', function(){
+            document.querySelector('#navbarNav').classList.add('d-block');
+        })
 
-    Util.setForm()
+        inputDate.addEventListener('change', function (){
+            if(selectLocation.value && inputDate.value){
+                if(temperatureSheet){
+                    temperatureSheet.destroy();
+                }
+
+                doAction('getData');
+            }
+        });
+
+        selectLocation.addEventListener('change', function (){
+            if(selectLocation.value && inputDate.value){
+                if(temperatureSheet){
+                    temperatureSheet.destroy();
+                }
+                doAction('getData');
+            }
+        })
+    });
+
+    function init(){
+        const selectedMenu = document.querySelectorAll('.menu-1');
+        selectedMenu[0].classList.add('text-warning');
+        selectedMenu[1].classList.add('text-warning');
+        Util.setForm();
+    }
+
+    function doAction(sAction){
+        if(sAction == 'getData'){
+            let when = inputDate.value;
+            let location = JSON.parse(selectLocation.value).fcstCoordinate;
+            let URL = '/forecast/'+Util.removeMinusChar(when)+"/"+location;
+
+            const data = {
+                categories: [
+                    '06시',
+                    '12시',
+                    '15시',
+                    '18시',
+                    '23시',
+                ],
+                series: [
+                    {
+                        name: '일기예보',
+                    },
+                    {
+                        name: '실제날씨',
+                    },
+                ],
+            };
+
+            Util.getAjax(URL, '', 'GET', function(result){
+                if(199 < result.code && result.code <= 299 ){
+                    let size = result.data.length;
+                    let fcstData = [];
+                    for (let i = 0; i < size; i++) {
+                        fcstData[i] = Number(result.data[i].tmp);
+                    }
+                    data.series[0].data = fcstData;
+
+                }else{
+                    alert(result.message);
+                }
+           });
+
+            when = inputDate.value;
+            location = JSON.parse(selectLocation.value).weatherCoordinate;
+            URL = "/hourlyWeather/" + Util.removeMinusChar(when) + "/"+ location;
+            Util.getAjax(URL, '', 'GET', function(result){
+                if(199 < result.code && result.code <= 299 ){
+                    let size = result.data.length;
+                    let weatherData = [];
+                    for (let i = 0; i < size; i++) {
+                        weatherData[i] = Number(result.data[i].ta);
+                    }
+                    data.series[1].data = weatherData;
+                    setChart(data);
+                }else{
+                    alert(result.message);
+                }
+            });
+
+        }
+    }
+
+    function setChart(data){
+        const el = document.getElementById('temperatureSheet');
+        const options = {
+            chart : {
+                title:'',
+                width:document.getElementById('temperatureSheet').clientWidth * 0.9,
+                height:document.getElementById('temperatureSheet').clientHeight * 0.9
+            },
+
+            legend: {
+                visible: true,
+                width:90,
+                align: 'right',
+            },
+
+            tooltip: {
+                formatter: (value) => `${value}°`,
+            },
+
+            exportMenu: {
+                visible: false
+            },
+
+            xAxis: {
+                height:10,
+                label: {
+                    interval: 2,
+                },
+                tick: {
+                    interval: 2,
+                },
+                title: {
+                    text: '',
+                    offsetX: 0,
+                    offsetY: 0,
+                },
+            },
+
+            yAxis: {
+                label: {
+                    interval: 1,
+                },
+            },
+
+            theme: {
+                chart: {
+                    fontFamily: 'Malgun Gothic',
+                    backgroundColor: 'rgba(255, 255, 255, 0)',
+                },
+
+                legend: {
+                    label: {
+                        fontFamily: 'NanumPenScript-Regular',
+                        fontSize: 24,
+                        color: 'rgb(255, 255, 255)',
+                    }
+                },
+
+                xAxis: {
+                    label: {
+                        fontFamily: 'NanumPenScript-Regular',
+                        fontWeight:'bold',
+                        fontSize: 24,
+                        color: 'white'
+                    },
+                    color:'white',
+                    width: '3',
+                },
+
+                yAxis: {
+                    label: {
+                        fontFamily: 'NanumPenScript-Regular',
+                        fontWeight:'bold',
+                        fontSize: 24,
+                        color: 'white'
+                    },
+                    color:'white',
+                    width: '3',
+                },
+
+            },
+
+            series: {
+                spline: true,
+            },
+
+        }
+
+        temperatureSheet = toastui.Chart.lineChart({el, data, options});
+
+    }
+
+
 </script>
 </body>
 </html>

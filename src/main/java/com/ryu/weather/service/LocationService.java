@@ -15,16 +15,13 @@ public class LocationService {
     // field
     private LocationRepository repository;
 
-
     // cons
     @Autowired
     public LocationService(LocationRepository repository) {
         this.repository = repository;
     }
 
-
     // method
-
     /**
      * 지역정보를 추가
      * @param dto 지역정보 객체
@@ -38,13 +35,14 @@ public class LocationService {
         repository.save(entity);
     }
 
+
     /**
      * 지역정보를 모두 불러옮
      * @return 지역정보 리스트
      */
     public List<LocationDTO> getLocationAll() {
         ModelMapper modelMapper = new ModelMapper();
-        List<LocationEntity> entityList  = repository.findAll();
+        List<LocationEntity> entityList  = repository.findAllByOrderBySeqAsc();
         List<LocationDTO> dtoList = entityList.stream().map(LocationEntity->modelMapper.map(LocationEntity, LocationDTO.class)).collect(Collectors.toList());
         return dtoList;
     }

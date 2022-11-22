@@ -7,6 +7,20 @@
   src: url(/font/NanumPenScript-Regular.ttf) format("truetype");
 }
 /**********************************************
+  common start
+**********************************************/
+.h-38 {
+  height: 38% !important;
+}
+
+.h-40 {
+  height: 40% !important;
+}
+
+/**********************************************
+  common stop
+**********************************************/
+/**********************************************
   navi start
 **********************************************/
 #navigation {
@@ -47,8 +61,8 @@ i {
     font-size: 1.5em;
   }
   #navigation {
-    padding-left: 1%;
-    padding-right: 3%;
+    padding-left: 5%;
+    padding-right: 5%;
   }
   .menu-1,
 .menu-2,
@@ -111,30 +125,55 @@ i {
   background: -o-linear-gradient(to bottom, #84A8E6, #5F96CF, #84A8E6);
   background: linear-gradient(to bottom, #84A8E6, #5F96CF, #84A8E6);
 }
-#yesterday-container input[type=date] {
+#yesterday-container input[type=date], #yesterday-container select {
   border: 3px solid white;
   background-color: #84A8E6;
   color: white;
   font-weight: bolder;
-  text-align: center;
-}
-#yesterday-container select {
-  border: 3px solid white;
-  background-color: #84A8E6;
-  color: white;
-  font-weight: bolder;
-  text-align: center;
 }
 #yesterday-container .input-group {
   padding-left: 10% !important;
   padding-right: 10% !important;
-  text-align: center;
+}
+#yesterday-container .row {
+  padding-left: 10% !important;
+  padding-right: 10.8% !important;
+  margin: 0 auto;
+}
+#yesterday-container .row .col-md-12, #yesterday-container .row .col-md-3,
+#yesterday-container .row .col-md-2 {
+  background-color: rgba(255, 255, 255, 0.4);
+}
+#yesterday-container .row.w-100.h-25.justify-content-between {
+  padding-right: 10.3% !important;
+}
+#yesterday-container #temperatureSheet .toastui-chart-wrapper {
+  display: flex;
+}
+#yesterday-container #temperatureSheet .toastui-chart-wrapper canvas {
+  margin: auto;
+}
+#yesterday-container .h-38 {
+  height: 33% !important;
 }
 
 @media screen and (max-width: 768px) {
+  #yesterday-container {
+    overflow: scroll;
+  }
   #yesterday-container .input-group {
     padding-left: 0% !important;
     padding-right: 0% !important;
+  }
+  #yesterday-container .row {
+    padding-left: 2% !important;
+    padding-right: 2% !important;
+    height: 33% !important;
+  }
+  #yesterday-container .row.w-100.h-25.justify-content-between {
+    padding-left: 2% !important;
+    padding-right: 2% !important;
+    height: 75% !important;
   }
 }
 /**********************************************

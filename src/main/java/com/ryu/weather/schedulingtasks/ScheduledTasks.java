@@ -31,9 +31,9 @@ public class ScheduledTasks {
                 List<ForecastDTO> forecasts = forecast.getForecastFromApi(loc.getFcstCoordinate());
                 for (ForecastDTO forc: forecasts) {
                     String time = forc.getFcstTime();
-
-                    if(time.equals("0600")||time.equals("1200")||
-                       time.equals("1500")||time.equals("1800")||
+                    if(time.equals("0600")||time.equals("0900")||
+                       time.equals("1200")||time.equals("1500")||
+                       time.equals("1800")||time.equals("2100")||
                        time.equals("2300")){
                         forecast.insertForecast(forc);
                     }  //END if

@@ -8,6 +8,22 @@
   src:url(/font/NanumPenScript-Regular.ttf) format('truetype');
 }
 
+/**********************************************
+  common start
+**********************************************/
+
+.h-38{
+  height: 38% !important;
+}
+
+.h-40{
+  height: 40% !important;
+}
+
+/**********************************************
+  common stop
+**********************************************/
+
 
 /**********************************************
   navi start
@@ -141,33 +157,72 @@ i {
   background: -o-linear-gradient(to bottom, #84A8E6, #5F96CF, #84A8E6);
   background: linear-gradient(to bottom, #84A8E6, #5F96CF, #84A8E6);
 
-  input[type='date']{
+  input[type='date'], select{
     border: 3px solid white;
     background-color: #84A8E6;
     color: white;
     font-weight: bolder;
   }
 
-  select{
-    border: 3px solid white;
-    background-color: #84A8E6;
-    color: white;
-    font-weight: bolder;
-  }
 
   .input-group{
     padding-left: 10% !important;
     padding-right: 10% !important;
   }
 
+  .row{
+    padding-left: 10% !important;
+    padding-right: 10.8% !important;
+    margin: 0 auto;
+
+    .col-md-12, .col-md-3,
+    .col-md-2 {
+      background-color: rgba(255, 255, 255, 0.4);
+    }
+
+  }
+
+  .row.w-100.h-25.justify-content-between{
+    padding-right: 10.3% !important;
+  }
+
+  #temperatureSheet{
+    .toastui-chart-wrapper{
+      display: flex;
+
+      canvas{
+          margin: auto;
+      }
+    }
+  }
+
+  .h-38{
+    height: 33% !important;
+  }
+
 }
 
 @media screen and (max-width: 768px) {
   #yesterday-container{
+    overflow: scroll;
+
     .input-group{
       padding-left: 0% !important;
       padding-right: 0% !important;
     }
+
+    .row {
+      padding-left: 2% !important;
+      padding-right: 2% !important;
+      height: 33% !important;
+    }
+
+   .row.w-100.h-25.justify-content-between{
+      padding-left: 2% !important;
+      padding-right: 2% !important;
+      height: 75% !important;
+    }
+
   }
 }
 

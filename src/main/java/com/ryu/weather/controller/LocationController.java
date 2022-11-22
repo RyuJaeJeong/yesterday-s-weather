@@ -27,7 +27,7 @@ public class LocationController {
     }
 
     //method
-    @GetMapping(value = "/locations", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
+    @GetMapping(value = "/locations", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<CommonResponse> getLocationAll(){
         CommonResponse<List<LocationDTO>> response = new CommonResponse<>();
         try{

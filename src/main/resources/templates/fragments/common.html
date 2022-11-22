@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="/@fontawesome/fontawesome-free/css/all.min.css">
     <!-- bootstrap@5.2.1 -->
     <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/@toast-ui/chart/dist/toastui-chart.min.css">
     <!-- css -->
     <link rel="stylesheet" href="/css/reset.css">
     <link rel="stylesheet" href="/css/style.css">
@@ -23,8 +24,8 @@
 <body>
 
     <nav th:fragment="frg_navbar" class="navbar navbar-dark navbar-expand-lg py-md-3"  id="navigation">
-            <a class="navbar-brand text-light"  href="/">
-                <i class="fa-solid fa-umbrella" style="font-size: 1.75em;"></i><span id="logo">어제의 날씨</span>
+            <a class=" logo-hover navbar-brand text-light"  href="/">
+                <i id="logo-icon" class="fa-solid fa-umbrella" style="font-size: 1.75em;"></i><span id="logo">어제의 날씨</span>
             </a>
             <button class="navbar-toggler border-light" type="button"  data-bs-toggle="modal" data-bs-target="#exampleModal" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon border-light text-light"></span>
@@ -47,6 +48,7 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <i class="fa-solid fa-umbrella" style="font-size: 1.75em;"></i>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <div class="collapse navbar-collapse justify-content-end " id="navbarNav">
@@ -75,7 +77,8 @@
     </nav>
     <th:block layout:fragment="script">
         <script type="text/javascript" src="/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="/@fontawesome/fontawesome-free/js/all.min.js" crossorigin="anonymous"></script>
+        <script src="/@fontawesome/fontawesome-free/js/all.min.js"></script>
+        <script src="/@toast-ui/chart/dist/toastui-chart.min.js"></script>
         <script src="/js/common.js"></script>
     </th:block>
 </body>
