@@ -3,38 +3,54 @@ package com.ryu.weather.service;
 import com.ryu.weather.common.Util;
 import com.ryu.weather.dto.ForecastDTO;
 import com.ryu.weather.entity.ForecastEntity;
-import com.ryu.weather.entity.ForecastId;
+import com.ryu.weather.entity.ForecastID;
 import com.ryu.weather.repository.ForecastRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+
 
 @Service
 @Slf4j
 public class ForecastService {
 
 
+    //field
     private final ForecastRepository forecastRepository;
-    private ModelMapper modelMapper = new ModelMapper();
+    private final ModelMapper mapperToEntity;
+    private final ModelMapper mapperToDTO;
 
-    @Autowired
-    public ForecastService(ForecastRepository forecastRepository) {
+    //cons
+    public ForecastService(ForecastRepository forecastRepository, ModelMapper mapperToEntity, ModelMapper mapperToDTO) {
         this.forecastRepository = forecastRepository;
+
+        //매핑 규칙 추가
+        mapperToEntity.typeMap(ForecastDTO.class, ForecastEntity.class).addMappings(mapper ->{
+            mapper.map(src -> src.getLocationNo(), (destination, value) -> destination.getForecastId().getLocation().setLocationNo((value==null)?0: (int) value));
+            mapper.<String>map(src -> src.getFcstDate(), (destination, value) -> destination.getForecastId().setFcstDate(value));
+            mapper.<String>map(src -> src.getFcstTime(), (destination, value) -> destination.getForecastId().setFcstTime(value));
+        });
+
+        mapperToDTO.typeMap(ForecastEntity.class, ForecastDTO.class).addMappings(mapper ->{     //매핑규칙추가.
+            mapper.map(src -> src.getForecastId().getLocation().getLocationNo(), (destination, value) -> destination.setLocationNo((value==null)?0: (int) value));
+            mapper.<String>map(src -> src.getForecastId().getLocation().getName(), (destination, value) -> destination.setLocationName(value));
+            mapper.<String>map(src -> src.getForecastId().getFcstDate(), (destination, value) -> destination.setFcstDate(value));
+            mapper.<String>map(src -> src.getForecastId().getFcstTime(), (destination, value) -> destination.setFcstTime(value));
+        });
+
+        this.mapperToEntity = mapperToEntity;
+        this.mapperToDTO = mapperToDTO;
     }
 
     /**
@@ -43,12 +59,7 @@ public class ForecastService {
      */
     public void insertForecast(ForecastDTO dto){
         try {
-            modelMapper.typeMap(ForecastDTO.class, ForecastEntity.class).addMappings(mapper ->{     //매핑규칙추가.
-                mapper.<String>map(src -> src.getCoordinate(), (destination, value) -> destination.getForecastId().getLocation().setFcstCoordinate(value));
-                mapper.<String>map(src -> src.getFcstDate(), (destination, value) -> destination.getForecastId().setFcstDate(value));
-                mapper.<String>map(src -> src.getFcstTime(), (destination, value) -> destination.getForecastId().setFcstTime(value));
-            });
-            ForecastEntity entity = modelMapper.map(dto, ForecastEntity.class);
+            ForecastEntity entity = mapperToEntity.map(dto, ForecastEntity.class);
             forecastRepository.save(entity);
         }catch (Exception e){
             e.printStackTrace();
@@ -104,7 +115,7 @@ public class ForecastService {
               JSONArray array = (JSONArray) obj.get("item");
               forArray : for (int i = 0; i < array.length(); i++){
                   ForecastDTO dto = new ForecastDTO();
-                  ForecastId id = new ForecastId();
+                  ForecastID id = new ForecastID();
                   obj = (JSONObject) array.get(i);
                   if(obj.get("fcstDate").equals(Util.getSomeDayMore(1))) {    //예보일이 내일 일때
                       forDto : for (int j = i; j<=i+12; j++) {
@@ -119,12 +130,13 @@ public class ForecastService {
                                   case "TMP" : dto.setTMP(obj.get("fcstValue").toString()); break;
                                   case "TMN" : dto.setTMN(obj.get("fcstValue").toString()); break;
                                   case "TMX" : dto.setTMX(obj.get("fcstValue").toString()); break;
+                                  case "VEC" : dto.setVEC(obj.get("fcstValue").toString()); break;
+                                  case "WSD" : dto.setWSD(obj.get("fcstValue").toString()); break;
                                   case "UUU" :
                                   case "VVV" :
                                   case "WAV" :
-                                      break;
-                                  case "VEC" : dto.setVEC(obj.get("fcstValue").toString()); break;
-                                  case "WSD" : dto.setWSD(obj.get("fcstValue").toString()); break;
+                                                break;
+
                               }
 
                           if(obj.get("fcstTime").equals("0600")||obj.get("fcstTime").equals("1500")){
@@ -176,13 +188,7 @@ public class ForecastService {
         List<ForecastDTO> dtoList = new ArrayList<>();
         try{
             List<ForecastEntity> entityList = forecastRepository.findByForecastId_Location_CoordinateAndForecastIdFcstDate(when, where);
-            modelMapper.typeMap(ForecastEntity.class, ForecastDTO.class).addMappings(mapper ->{     //매핑규칙추가.
-                mapper.<String>map(src -> src.getForecastId().getLocation().getFcstCoordinate(), (destination, value) -> destination.setCoordinate(value));
-                mapper.<String>map(src -> src.getForecastId().getLocation().getName(), (destination, value) -> destination.setLocationName(value));
-                mapper.<String>map(src -> src.getForecastId().getFcstDate(), (destination, value) -> destination.setFcstDate(value));
-                mapper.<String>map(src -> src.getForecastId().getFcstTime(), (destination, value) -> destination.setFcstTime(value));
-            });
-            dtoList = entityList.stream().map(ForecastEntity->modelMapper.map(ForecastEntity, ForecastDTO.class)).collect(Collectors.toList());
+            dtoList = entityList.stream().map(ForecastEntity->mapperToDTO.map(ForecastEntity, ForecastDTO.class)).collect(Collectors.toList());
         }catch (Exception e){
             e.printStackTrace();
         }

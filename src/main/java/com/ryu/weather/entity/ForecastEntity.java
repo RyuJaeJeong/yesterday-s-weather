@@ -6,10 +6,11 @@ import javax.persistence.*;
 
 @Entity
 @Data
-@Table(name="t_weather")
+@Table(name="t_forecast")
 public class ForecastEntity {
+
     @EmbeddedId
-    private ForecastId forecastId;
+    private ForecastID forecastId;
 
     @Column(columnDefinition = "varchar(10)", nullable = true)
     private String TMP;

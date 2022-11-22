@@ -16,20 +16,18 @@ import javax.persistence.Table;
 public class LocationEntity {
 
     @Id
+    private int locationNo;
+
+    @Column(columnDefinition = "varchar(6)", nullable = false)
     private String fcstCoordinate;
 
-    @Column(columnDefinition = "varchar(3)", nullable = true)
+    @Column(columnDefinition = "varchar(3)", nullable = false)
     private String weatherCoordinate;
 
-    @Column(columnDefinition = "varchar(20)", nullable = true)
+    @Column(columnDefinition = "varchar(20)")
     private String name;
 
-    public LocationEntity(String name, String fcstCoordinate) {
-        this.name = name;
-        this.fcstCoordinate = fcstCoordinate;
-    }
-
-    public LocationEntity() {
-
-    }
+    @Column(columnDefinition = "varchar(3)")
+    private String seq;
+    
 }

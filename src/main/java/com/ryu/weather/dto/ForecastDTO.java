@@ -10,6 +10,7 @@ import lombok.*;
 public class ForecastDTO {
 
     //field
+    private int locationNo;
     private String coordinate;
     private String locationName;
     private String fcstDate;
