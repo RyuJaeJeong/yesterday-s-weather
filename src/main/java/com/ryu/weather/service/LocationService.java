@@ -3,22 +3,19 @@ package com.ryu.weather.service;
 import com.ryu.weather.dto.LocationDTO;
 import com.ryu.weather.entity.LocationEntity;
 import com.ryu.weather.repository.LocationRepository;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@RequiredArgsConstructor
 @Service
 public class LocationService {
 
     // field
-    private LocationRepository repository;
-
-    // cons
-    public LocationService(LocationRepository repository) {
-        this.repository = repository;
-    }
+    private final LocationRepository repository;
 
     // method
     /**

@@ -84,13 +84,14 @@ public class YesterdayController {
      * @param location 지역 좌표
      * @return
      */
+    /*
     @GetMapping(value = "/hourlyWeather/{when}/{location}" , produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<CommonResponse> getWeather(@PathVariable("when") String when, @PathVariable("location") String location){
         CommonResponse<List<WeatherDTO>> response = new CommonResponse<>();
         try{
             //시간 자료 서비스 최대 9시간 까지 조회 가능
-            List<WeatherDTO> weatherList = weatherService.getWeatherFromApi(when, location, "06", "15");
-            List<WeatherDTO> weatherList2 = weatherService.getWeatherFromApi(when, location, "18", "23");
+            //List<WeatherDTO> weatherList = weatherService.getWeatherFromApi(when, location, "06", "15");
+            //List<WeatherDTO> weatherList2 = weatherService.getWeatherFromApi(when, location, "18", "23");
             List<WeatherDTO> weatherListFinal = new ArrayList<>();
             for (WeatherDTO dto : weatherList){
                 switch (dto.getWeatherTime()){
@@ -132,6 +133,7 @@ public class YesterdayController {
 
         return new ResponseEntity<>(response, response.getHttpStatus());
     }
+    */
 
 
 
