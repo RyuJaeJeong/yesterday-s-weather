@@ -72,8 +72,8 @@
     function doAction(sAction){
         if(sAction == 'getData'){
             let when = inputDate.value;
-            let location = JSON.parse(selectLocation.value).fcstCoordinate;
-            let URL = '/forecast/'+Util.removeMinusChar(when)+"/"+location;
+            let location = selectLocation.value;
+            let URL = '/forecast/'+Util.removeMinusChar(when)+"/"+Number(location);
 
             const data = {
                 categories: [
@@ -108,14 +108,14 @@
            });
 
             when = inputDate.value;
-            location = JSON.parse(selectLocation.value).weatherCoordinate;
-            URL = "/hourlyWeather/" + Util.removeMinusChar(when) + "/"+ location;
+            location = selectLocation.value;
+            URL = "/weather/" + Util.removeMinusChar(when) + "/"+ Number(location);
             Util.getAjax(URL, '', 'GET', function(result){
                 if(199 < result.code && result.code <= 299 ){
                     let size = result.data.length;
                     let weatherData = [];
                     for (let i = 0; i < size; i++) {
-                        weatherData[i] = Number(result.data[i].ta);
+                        weatherData[i] = Number(result.data[i].tmp);
                     }
                     data.series[1].data = weatherData;
                     setChart(data);

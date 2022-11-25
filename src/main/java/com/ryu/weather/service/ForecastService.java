@@ -183,12 +183,8 @@ public class ForecastService {
      */
     public List<ForecastDTO> getForecast(String when, int where) {
         List<ForecastDTO> dtoList = new ArrayList<>();
-        try{
-            List<ForecastEntity> entityList = forecastRepository.findByForecastId_Location_CoordinateAndForecastIdFcstDate(when, where);
-            dtoList = entityList.stream().map(ForecastEntity->mapperToDTO.map(ForecastEntity, ForecastDTO.class)).collect(Collectors.toList());
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+        List<ForecastEntity> entityList = forecastRepository.findByForecastId_Location_CoordinateAndForecastIdFcstDate(when, where);
+        dtoList = entityList.stream().map(ForecastEntity->mapperToDTO.map(ForecastEntity, ForecastDTO.class)).collect(Collectors.toList());
         return dtoList;
     }
 

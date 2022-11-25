@@ -1,7 +1,6 @@
 package com.ryu.weather.controller;
 
 import com.ryu.weather.common.Util;
-import com.ryu.weather.dto.LocationDTO;
 import com.ryu.weather.payload.CommonResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -30,7 +30,7 @@ public class ScheduledTasks {
         this.weatherService = weather;
     }
 
-    @Scheduled(cron = "0 8 23 * * *")
+    @Scheduled(cron = "0 0 8 * * *")
     public void weatherScheduler() throws IOException {
         try {
             List<LocationDTO> locations = locationService.getLocationAll();

@@ -3,6 +3,7 @@ package com.ryu.weather.controller;
 import com.ryu.weather.dto.LocationDTO;
 import com.ryu.weather.payload.CommonResponse;
 import com.ryu.weather.service.LocationService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,17 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @Slf4j
 public class LocationController {
 
     //field
-    private LocationService locationService;
-
-    //cons
-    @Autowired
-    public LocationController(LocationService locationService) {
-        this.locationService = locationService;
-    }
+    private final LocationService locationService;
 
     //method
     @GetMapping(value = "/locations", produces = {MediaType.APPLICATION_JSON_VALUE})

@@ -18,6 +18,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -25,7 +26,7 @@ import java.util.List;
 public class WeatherService {
 
     //field
-    private WeatherRepository weatherRepository;
+    private final WeatherRepository weatherRepository;
     private final ModelMapper mapperToEntity;
     private final ModelMapper mapperToDTO;
 
@@ -180,6 +181,18 @@ public class WeatherService {
     public void insertWeather(WeatherDTO dto){
         WeatherEntity entity = mapperToEntity.map(dto, WeatherEntity.class);
         weatherRepository.save(entity);
+    }
+
+    /**
+     *
+     * @param when YYYYmmdd
+     * @param where 지역묶음번호
+     * @return
+     */
+    public List<WeatherDTO> getWeather(String when, int where){
+        List<WeatherEntity> entityList = weatherRepository.findByWeatherId_Location_WeatherCoordinateAndWeatherIdWeatherDate(when, where);
+        List<WeatherDTO> dtoList = entityList.stream().map(weatherEntity->mapperToDTO.map(weatherEntity, WeatherDTO.class)).collect(Collectors.toList());
+        return dtoList;
     }
 
 }

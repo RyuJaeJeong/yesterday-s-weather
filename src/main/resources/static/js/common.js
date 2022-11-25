@@ -35,8 +35,7 @@ const Util = {
               const size = result.data.length;
               for (let i = 0; i < size; i++) {
                   const location = result.data[i];
-                  const data = JSON.stringify({'fcstCoordinate':location.fcstCoordinate, 'weatherCoordinate':location.weatherCoordinate});
-                  str += "<option value='"+data+"'>"+ location.name+"</option>"
+                  str += "<option value='"+location.locationNo+"'>"+ location.name+"</option>"
               }
               document.querySelector('#location').innerHTML = str;
           }else{
