@@ -36,12 +36,7 @@ src/test/**
 
 ### VS Code ###
 .vscode/
-logs/spring.log
-logs/spring.log.2022-11-09.0.gz
-logs/spring.log.2022-11-10.0.gz
-logs/spring.log.2022-11-11.0.gz
-logs/spring.log.2022-11-14.0.gz
-
+logs/**
 ### security ###
 src/main/resources/application-secret.properties
 src/main/resources/cert.p12
