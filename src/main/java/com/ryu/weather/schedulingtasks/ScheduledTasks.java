@@ -10,6 +10,7 @@ import com.ryu.weather.service.WeatherService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +31,8 @@ public class ScheduledTasks {
         this.weatherService = weather;
     }
 
-    @Scheduled(cron = "0 0 8 * * *")
+    @Scheduled(cron = "0 10 11 * * *")
+    @Transactional
     public void weatherScheduler() throws IOException {
         try {
             List<LocationDTO> locations = locationService.getLocationAll();
