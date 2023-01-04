@@ -136,25 +136,23 @@ i {
   padding-right: 10% !important;
 }
 #yesterday-container .row {
-  padding-left: 10% !important;
-  padding-right: 10.8% !important;
+  padding-left: 10.5% !important;
+  padding-right: 10.5% !important;
   margin: 0 auto;
 }
-#yesterday-container .row .col-md-12, #yesterday-container .row .col-md-3,
-#yesterday-container .row .col-md-2 {
+#yesterday-container .row .col-md-2, #yesterday-container .row .col-md-3,
+#yesterday-container .row .col-md-4, #yesterday-container .row .col-md-5,
+#yesterday-container .row .col-md-6, #yesterday-container .row .col-md-7,
+#yesterday-container .row .col-md-8, #yesterday-container .row .col-md-9,
+#yesterday-container .row .col-md-10, #yesterday-container .row .col-md-11, #yesterday-container .row .col-md-12 {
   background-color: rgba(255, 255, 255, 0.4);
 }
-#yesterday-container .row.w-100.h-25.justify-content-between {
-  padding-right: 10.3% !important;
+#yesterday-container #first-row {
+  height: 40% !important;
 }
-#yesterday-container #temperatureSheet .toastui-chart-wrapper {
-  display: flex;
-}
-#yesterday-container #temperatureSheet .toastui-chart-wrapper canvas {
-  margin: auto;
-}
-#yesterday-container .h-38 {
-  height: 33% !important;
+#yesterday-container #first-row canvas {
+  display: block;
+  margin: 0 auto;
 }
 
 @media screen and (max-width: 768px) {
@@ -168,12 +166,21 @@ i {
   #yesterday-container .row {
     padding-left: 2% !important;
     padding-right: 2% !important;
-    height: 33% !important;
+    margin-bottom: 5%;
+    height: 50% !important;
   }
-  #yesterday-container .row.w-100.h-25.justify-content-between {
-    padding-left: 2% !important;
-    padding-right: 2% !important;
-    height: 75% !important;
+  #yesterday-container .row .col-md-2, #yesterday-container .row .col-md-3,
+#yesterday-container .row .col-md-4, #yesterday-container .row .col-md-5,
+#yesterday-container .row .col-md-6, #yesterday-container .row .col-md-7,
+#yesterday-container .row .col-md-8, #yesterday-container .row .col-md-9,
+#yesterday-container .row .col-md-10, #yesterday-container .row .col-md-11, #yesterday-container .row .col-md-12 {
+    margin-bottom: 5%;
+  }
+  #yesterday-container #first-row {
+    height: 80% !important;
+  }
+  #yesterday-container #first-row .col-md-8, #yesterday-container #first-row .col-md-3 {
+    height: 47.5% !important;
   }
 }
 /**********************************************

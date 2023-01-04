@@ -171,33 +171,27 @@ i {
   }
 
   .row{
-    padding-left: 10% !important;
-    padding-right: 10.8% !important;
+    padding-left: 10.5% !important;
+    padding-right: 10.5% !important;
     margin: 0 auto;
 
-    .col-md-12, .col-md-3,
-    .col-md-2 {
+
+    .col-md-2, .col-md-3,
+    .col-md-4, .col-md-5,
+    .col-md-6, .col-md-7,
+    .col-md-8, .col-md-9,
+    .col-md-10, .col-md-11, .col-md-12,{
       background-color: rgba(255, 255, 255, 0.4);
     }
 
   }
 
-  .row.w-100.h-25.justify-content-between{
-    padding-right: 10.3% !important;
-  }
-
-  #temperatureSheet{
-    .toastui-chart-wrapper{
-      display: flex;
-
-      canvas{
-          margin: auto;
-      }
+  #first-row{
+    height: 40% !important;
+    canvas{
+      display: block;
+      margin: 0 auto;
     }
-  }
-
-  .h-38{
-    height: 33% !important;
   }
 
 }
@@ -214,13 +208,26 @@ i {
     .row {
       padding-left: 2% !important;
       padding-right: 2% !important;
-      height: 33% !important;
+      margin-bottom: 5%;
+      height: 50% !important;
+
+      .col-md-2, .col-md-3,
+      .col-md-4, .col-md-5,
+      .col-md-6, .col-md-7,
+      .col-md-8, .col-md-9,
+      .col-md-10, .col-md-11, .col-md-12,{
+        margin-bottom: 5%;
+      }
+
     }
 
-   .row.w-100.h-25.justify-content-between{
-      padding-left: 2% !important;
-      padding-right: 2% !important;
-      height: 75% !important;
+    #first-row{
+      height: 80% !important;
+
+      .col-md-8, .col-md-3{
+        height: 47.5% !important;
+      }
+
     }
 
   }

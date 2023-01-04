@@ -3,20 +3,32 @@
 
 const Util = {
 
-    getAjax(url, param, method, callback){
+    getAjax(param, callback){
             const httpRequest = new XMLHttpRequest();
-            httpRequest.open(method, url);
-            httpRequest.responseType = "json";
-            if(method == 'post'){
+            httpRequest.open(param.method, param.url, param.async);
+            if(param.async) httpRequest.responseType = "json";
+
+            if(param.method == 'post'){
                 httpRequest.setRequestHeader('Content-Type', 'application/json');
-                httpRequest.send(JSON.stringify(param));
+                httpRequest.setRequestHeader('charset', 'UTF-8');
+                httpRequest.send(JSON.stringify(param.param));
             }else{
                 httpRequest.send();
             }
 
-            httpRequest.onload = () => {
-                callback(httpRequest.response);
-            }
+            if(!param.async){
+                const response = JSON.parse(httpRequest.response);
+                if(200>response.code||299<response.code){
+                    alert(response.message);
+                    return;
+                }
+
+                return response.data;
+            }else {
+                httpRequest.onload = function(e){
+                    callback(httpRequest.response);
+                }
+            };
     },
 
     addMinusChar(param){
@@ -29,7 +41,13 @@ const Util = {
 
     setForm(){
         // 지역정보 세팅
-        this.getAjax('/locations', '', 'GET', function(result){
+        let param = {
+            method : 'GET',
+            url:'/locations',
+            async:true,
+        }
+
+        this.getAjax(param, function(result){
           if(result.code == 200){
               let str = "<option value=\"\">=== 선택 ===</option>";
               const size = result.data.length;
@@ -43,8 +61,9 @@ const Util = {
           }
         });
 
+        param.url = '/yesterdaysDate'
         // 어제날짜 세팅
-        this.getAjax('/yesterdaysDate', '', 'GET', function (result){
+        this.getAjax(param, function (result){
             if(result.code == 200){
                 document.querySelector('input[type=\'date\']').value = Util.addMinusChar(result.data);
             }else{
