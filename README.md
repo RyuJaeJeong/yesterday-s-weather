@@ -14,14 +14,14 @@
 
 <h2> 2. 개발환경 소개</h2>
 <p>
-  1. openJDK 1.8.0_332<br>
-  2. Spring Boot 2.6.5<br>
-  3. MariaDB 10.6.11<br>
+  1. openJDK v.1.8.0_332<br>
+  2. Spring Boot v.2.6.5<br>
+  3. MariaDB v.10.6.11<br>
   4. Hibernate<br>
   5. HTML5, SCSS <br>
-  6. BOOTSTRAP 5.2.1 <br>
-  7. Font Awesome Free 6.2.0
-  8. TOAST UI Chart 4.5.0
+  6. BOOTSTRAP v.5.2.1 <br>
+  7. Font Awesome Free v.6.2.0
+  8. TOAST UI Chart v.4.5.0
 </p>
 
 
