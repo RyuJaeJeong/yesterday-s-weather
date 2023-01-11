@@ -12,6 +12,18 @@
   하는 서비스 제공을 준비하고 있습니다.<br>추후 "오늘" 서비스와 "내일" 서비스를 추가하고, 날씨를 주제로 떠들수 있는 커뮤니티를 만드는 것을 목표로 하고있습니다. 
 </p>
 
+<h2> 2. 개발환경 소개</h2>
+<p>
+  1. openJDK 1.8.0_332<br>
+  2. Spring Boot 2.6.5<br>
+  3. MariaDB 10.6.11<br>
+  4. Hibernate<br>
+  5. HTML5, SCSS <br>
+  6. BOOTSTRAP 5.2.1 <br>
+  7. Font Awesome Free 6.2.0
+  8. TOAST UI Chart 4.5.0
+</p>
+
 
 <h3> Spring Boot 기반 스케쥴러 구현 </h3>
 
