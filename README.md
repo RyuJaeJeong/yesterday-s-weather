@@ -48,10 +48,6 @@
 
 <h3> 3) PC와 Mobile 기기에서 동일한 사용자 경험을 할 수 있도록 화면을 구현했습니다. </h3>
 
-<p>
-  RESTful한 서버 구성을 위하여<br>
-</p>
-
 <img src="./README/main(PC).png" style="width:900px; height:40%; display:inline-block; margin:auto "/>
 <img src="./README/main(mobile).jpg" style="width:270px; height:40%; display:inline-block; margin:auto "/>
 <img src="./README/yesterday(pc).png" style="width:900px; height:40%; display:inline-block; margin:auto "/>
