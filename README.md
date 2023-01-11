@@ -20,8 +20,10 @@
   4. Hibernate<br>
   5. HTML5, SCSS <br>
   6. BOOTSTRAP v.5.2.1 <br>
-  7. Font Awesome Free v.6.2.0
-  8. TOAST UI Chart v.4.5.0
+  7. Font Awesome Free v.6.2.0 <br>
+  8. TOAST UI Chart v.4.5.0 <br>
+  9. Amazon Lightsail <br>
+  10.docker <br>
 </p>
 
 
