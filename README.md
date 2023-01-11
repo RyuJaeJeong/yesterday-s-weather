@@ -46,7 +46,7 @@
   3. HTTP 상태코드를 활용해 클라이언트에 상태를 전달하고자 했습니다. <br>
 </p>
 
-<img src="./README/httpStatus.png" style="width:900px; height:40%; display:inline-block; margin:auto "/>
+<img src="./README/httpMethod.png" style="width:900px; height:40%; display:inline-block; margin:auto "/>
 <img src="./README/httpCode.png" style="width:900px; height:40%; display:inline-block; margin:auto "/>
 
 
