@@ -56,7 +56,7 @@
 <img src="./README/yesterday(pc).png" style="width:900px; height:40%; display:inline-block; margin:auto "/>
 <img src="./README/yesterday(m).jpg" style="width:270px; height:40%; display:inline-block; margin:auto "/>
 
-<h3> 3) 도커를 이용하여 서버환경을 구성해 보았습니다. </h3>
+<h3> 4) 도커를 이용하여 서버환경을 구성해 보았습니다. </h3>
 
 <img src="./README/server.png" style="width:900px; height:40%; display:inline-block; margin:auto "/>
 
@@ -68,4 +68,9 @@
 3) 서버프로그램 실행 후, 로그가 별도의 파일로 남지 않던 문제 -> 로그 파일이 별도로 추가되도록 세팅 추가<br>
 4) 예보 조회시, 지역명을 함께 볼 수 없던 문제 -> ENTITY 수정 및 JPQL의 fetch JOIN 이용해 구현 <br>
 5) 기존 데이터를 수집한 일기예보 지점과, 실제 기상 관측 지점이 상이한 문제 -> 위치 좌표값을 수정, 기존 데이터 폐기 처리 
+6) 차트에 데이터 바인딩시 간혈적으로 관측데이터만 출력 되던 문제   
+7) 서버관리 이슈 
+  -- ORACLE CLOUD 이관 후 서버 인스턴스가 사라진 문제 -> SSH접속 포트 ip 제한 추가  
+  -- ORACLE CLOUD ROOT 계정에서 권한 문제로 서버 세팅이 불가 한 문제 -> Amazon Lightsail로 교체
+  -- Weather 스키마가 사라진 문제 -> MariaDB 쿼리 실행 로그 남도록 설정 추가, 추후 일정 시각에 SQL FIle 추출하여 서버에 보관 할 방법이 있는지 검토 
 </p>  
