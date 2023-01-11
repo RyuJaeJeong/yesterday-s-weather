@@ -56,9 +56,9 @@
 </p>
 
 <img src="./README/main(PC).png" style="width:900px; height:40%; display:inline-block; margin:auto "/>
-<img src="./README/main(mobile).jpg" style="width:900px; height:40%; display:inline-block; margin:auto "/>
+<img src="./README/main(mobile).jpg" style="width:90px; height:40%; display:inline-block; margin:auto "/>
 <img src="./README/yesterday(pc).png" style="width:900px; height:40%; display:inline-block; margin:auto "/>
-<img src="./README/yesterday(m).jpg" style="width:900px; height:40%; display:inline-block; margin:auto "/>
+<img src="./README/yesterday(m).jpg" style="width:90px; height:40%; display:inline-block; margin:auto "/>
 
 
 
