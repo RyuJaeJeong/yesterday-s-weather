@@ -40,13 +40,14 @@
 <h3> 2) RESTFUL API 구현하기위해 노력 </h3>
 
 <p>
-  RESTful한 서버 구성을 위하여
-  1. Spring이 지원하는 PathVariable을 이용하였습니다.
-  2. 자원에 대한 행위는 HTTP Method를 이용하여 표현하고자 했습니다. 
-  3. HTTP 상태코드를 활용해 클라이언트에 상태를 전달하고자 했습니다. 
+  RESTful한 서버 구성을 위하여<br>
+  1. Spring이 지원하는 PathVariable을 이용하였습니다.<br>
+  2. 자원에 대한 행위는 HTTP Method를 이용하여 표현하고자 했습니다. <br>
+  3. HTTP 상태코드를 활용해 클라이언트에 상태를 전달하고자 했습니다. <br>
 </p>
 
-<img src="./README/cron.png" style="width:900px; height:40%; display:inline-block; margin:auto "/>
+<img src="./README/httpStatus.png" style="width:900px; height:40%; display:inline-block; margin:auto "/>
+<img src="./README/httpCode.png" style="width:900px; height:40%; display:inline-block; margin:auto "/>
 
 
 
