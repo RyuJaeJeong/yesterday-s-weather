@@ -56,6 +56,9 @@
 <img src="./README/yesterday(pc).png" style="width:900px; height:40%; display:inline-block; margin:auto "/>
 <img src="./README/yesterday(m).jpg" style="width:270px; height:40%; display:inline-block; margin:auto "/>
 
+<h3> 3) 도커를 이용하여 서버환경을 구성해 보았습니다. </h3>
+
+<img src="./README/server.png" style="width:900px; height:40%; display:inline-block; margin:auto "/>
 
 
 <h3>이슈</h3>
