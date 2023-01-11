@@ -46,7 +46,18 @@
   3. HTTP 상태코드를 활용해 클라이언트에 상태를 전달하고자 했습니다. <br>
 </p>
 
+<h3> 3) PC와 Mobile 기기에서 동일한 사용자 경험을 할 수 있도록 화면을 구현했습니다. </h3>
+
+<p>
+  RESTful한 서버 구성을 위하여<br>
+  1. Spring이 지원하는 PathVariable을 이용하였습니다.<br>
+  2. 자원에 대한 행위는 HTTP Method를 이용하여 표현하고자 했습니다. <br>
+  3. HTTP 상태코드를 활용해 클라이언트에 상태를 전달하고자 했습니다. <br>
+</p>
+
 <img src="./README/HTTPMethod.png" style="width:900px; height:40%; display:inline-block; margin:auto "/>
+<img src="./README/httpCode.png" style="width:900px; height:40%; display:inline-block; margin:auto "/>
+<img src="./README/httpCode.png" style="width:900px; height:40%; display:inline-block; margin:auto "/>
 <img src="./README/httpCode.png" style="width:900px; height:40%; display:inline-block; margin:auto "/>
 
 
