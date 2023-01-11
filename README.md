@@ -48,6 +48,8 @@
 
 
 <h3> 3) PC와 Mobile 기기에서 동일한 사용자 경험을 할 수 있도록 화면을 구현했습니다. </h3>
+<img src="./README/HTTPMethod.png" style="width:900px; height:40%; display:inline-block; margin:auto "/>
+<img src="./README/httpCode.png" style="width:900px; height:40%; display:inline-block; margin:auto "/>
 
 <p> BOOTSTRAP 그리드 시스템과 MEDIA 쿼리를 활용하여 PC와 모바일 모두 확인 할 수 있도록 화면을 구성 하였습니다. </p>
 <img src="./README/main(PC).png" style="width:900px; height:40%; display:inline-block; margin:auto "/>
