@@ -3,6 +3,16 @@
 
 <img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=flat-square&logo=SpringBoot&logoColor=white"/> <img src="https://img.shields.io/badge/MariaDB-1F305F?style=flat-square&logo=MariaDB&logoColor=white"/> <img src="https://img.shields.io/badge/Hibernate-59666C?style=flat-square&logo=Hibernate&logoColor=white"/> <img src="https://img.shields.io/badge/JUnit5-25A162?style=flat-square&logo=JUnit5&logoColor=white"/> <img src="https://img.shields.io/badge/Gradle-02303A?style=flat-square&logo=Gradle&logoColor=white"/> <img src="https://img.shields.io/badge/IntelliJ IDEA-000000?style=flat-square&logo=IntelliJIDEA&logoColor=white"/> <img src="https://img.shields.io/badge/Amazon EC2-FF9900?style=flat-square&logo=AmazonEC2&logoColor=white"/>
 
+<h1> 어제의 날씨 </h1>
+
+
+<h2> 1. 프로젝트 소개<h2>
+<p>
+  <b>"어제의 날씨"</b> 는 어제의 일기예보와 실제 관측치를 비교해보는 데이터 시각화 서비스입니다. <br>기상청에서 제공하는 지역별 일기예보 데이터와 종관 관측데이터를 비교하여 표시
+  하는 서비스 제공을 준비하고 있습니다.
+</p>
+
+
 <h3> Spring Boot 기반 스케쥴러 구현 </h3>
 
 <p>
