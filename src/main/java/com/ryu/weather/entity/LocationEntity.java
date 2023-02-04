@@ -1,10 +1,6 @@
 package com.ryu.weather.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -27,7 +23,7 @@ public class LocationEntity {
     @Column(columnDefinition = "varchar(20)")
     private String name;
 
-    @Column(columnDefinition = "varchar(3)")
+    @Column(columnDefinition = "int(3)")
     private String seq;
     
 }

@@ -5,7 +5,6 @@ import com.ryu.weather.dto.WeatherDTO;
 import com.ryu.weather.entity.WeatherEntity;
 import com.ryu.weather.repository.WeatherRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.juli.logging.Log;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.modelmapper.ModelMapper;
