@@ -1,4 +1,8 @@
 @font-face {
+  font-family: "NotoSansKR-Regular";
+  src: url(/font/Noto_Sans_KR/NotoSansKR-Regular.otf) format("truetype");
+}
+@font-face {
   font-family: "GothicA1-Light";
   src: url(/font/GothicA1-Light.ttf) format("truetype");
 }
@@ -15,6 +19,10 @@
 
 .h-40 {
   height: 40% !important;
+}
+
+.font-fcst {
+  color: #2BAFFA !important;
 }
 
 /**********************************************
@@ -150,9 +158,40 @@ i {
 #yesterday-container #first-row {
   height: 40% !important;
 }
+#yesterday-container #first-row .carousel-control-next, #yesterday-container #first-row .carousel-control-prev {
+  width: 5%;
+  bottom: 8%;
+}
 #yesterday-container #first-row canvas {
   display: block;
   margin: 0 auto;
+}
+#yesterday-container #second-row table tr, #yesterday-container #second-row table td {
+  font-family: "NotoSansKR-Regular";
+  vertical-align: middle !important;
+  color: white;
+  font-weight: bold;
+  padding-bottom: 5%;
+}
+#yesterday-container #second-row table tr td:nth-child(1), #yesterday-container #second-row table td td:nth-child(1) {
+  text-align: left !important;
+  font-size: 1em;
+  padding-left: 5%;
+}
+#yesterday-container #second-row table tr td:nth-child(2), #yesterday-container #second-row table td td:nth-child(2) {
+  text-align: center !important;
+  font-size: 0.9em;
+  color: white;
+}
+#yesterday-container #second-row table tr td:nth-child(3), #yesterday-container #second-row table td td:nth-child(3) {
+  text-align: right !important;
+  font-size: 1em;
+  color: white;
+}
+#yesterday-container #second-row table tr td:nth-child(4), #yesterday-container #second-row table td td:nth-child(4) {
+  text-align: right !important;
+  font-size: 1em;
+  padding-right: 5%;
 }
 
 @media screen and (max-width: 768px) {
@@ -179,8 +218,11 @@ i {
   #yesterday-container #first-row {
     height: 80% !important;
   }
-  #yesterday-container #first-row .col-md-8, #yesterday-container #first-row .col-md-3 {
-    height: 47.5% !important;
+  #yesterday-container #first-row .col-md-8 {
+    height: 48%;
+  }
+  #yesterday-container #first-row .col-md-3 {
+    height: 50%;
   }
 }
 /**********************************************

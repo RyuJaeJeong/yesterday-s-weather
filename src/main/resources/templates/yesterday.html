@@ -9,18 +9,40 @@
     <input type="date" class="form-control mx-2 rounded" >
   </div>
   <div id="first-row" class="row w-100 mb-3 justify-content-between">
-      <div id="temperatureSheet-container" class="col-md-8 p-0 rounded">
-        <div id="temperatureSheet" ></div>
+      <div id="temperatureSheet-container" class="col-md-12 p-0 rounded">
+          <div id="carouselExample" class="carousel slide w-100 h-100">
+              <div class="carousel-inner w-100 h-100" style="text-align: center; vertical-align: middle !important;">
+                  <div id="" class="carousel-item w-100 h-100 active">
+                      <div id="temperatureSheet" ></div>
+                  </div>
+                  <div class="carousel-item w-100 h-100">
+                      <div id="rainfall-sheet" ></div>
+                  </div>
+                  <div class="carousel-item w-100 h-100">
+                      <div id="snow-sheet" ></div>
+                  </div>
+                  <div class="carousel-item w-100 h-100">
+                      <div id="humidity-sheet" ></div>
+                  </div>
+              </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+              </button>
+          </div>
       </div>
+  </div>    <!-- first-row end -->
+  <div id="second-row" class="row w-100 h-40 justify-content-between">
       <div class="col-md-3 p-0 rounded">
-
+          <table class="w-100 h-100 align-items-center "></table>
       </div>
-  </div>
-  <div class="row w-100 h-40 justify-content-between">
       <div class="col-md-6 p-0  rounded"></div>
-      <div class="col-md-5 p-0  rounded"></div>
   </div>
-</div>
+</div>     <!-- second-row end -->
 
 <script th:replace="~{fragments/common.html :: script}"></script>
 <script>
@@ -29,6 +51,9 @@
     const where = document.querySelector('#search-condition select');
     const when = document.querySelector('input[type=\'date\']');
     let temperatureSheet;
+    let rainfallSheet;
+    let humiditySheet;
+
     document.addEventListener('DOMContentLoaded', function (){
         init();
         <!-- 모바일 메뉴 클릭 시 display:block되도록 -->
@@ -36,84 +61,156 @@
             document.querySelector('#navbarNav').classList.add('d-block');
         });
 
-        searchCondition.addEventListener('change', function(e){
+        searchCondition.addEventListener('change', function(){
            if(where.value && when.value){
                 const fcstData = doAction('getForecast');
                 const weatherData = doAction('getWeather');
-                if(fcstData&&weatherData){
-                    if(temperatureSheet) temperatureSheet.destroy();
-                    const series = [];
+                console.log(fcstData);
+                console.log(weatherData);
+                if(fcstData && weatherData){
+                    const fcstSize = fcstData.length;
+                    const weatherSize = weatherData.length;
+                    const temperatureSeries = [];
+                    const humiditySeries = [];
+                    const pcpSeries = [];
 
+
+                    //차트에 바인딩 할 예보 데이터
                     const fcstTmp = {
                         name:"예보기온",
                         data:[],
                     };
 
-                    const fcstSize = fcstData.length;
-                    for (let i = 0; i < fcstSize; i++) {
-                        fcstTmp.data.push(Number(fcstData[i].tmp));
+                    const fcstHumidity = {
+                        name:"예보습도",
+                        data:[],
                     }
 
+                    const fcstPcp = {
+                        name:"예보강수량",
+                        data:[],
+                    }
+
+                    //차트에 바인딩 할 관측 데이터
                     const weatherTmp = {
                         name:"관측기온",
                         data:[],
                     };
 
-                    const weatherSize = weatherData.length;
-                    for (let i = 0; i < weatherSize; i++) {
-                        weatherTmp.data.push(Number(weatherData[i].tmp));
+                    const weatherHumidity = {
+                        name:"관측습도",
+                        data:[],
                     }
 
-                    series.push(fcstTmp);
-                    series.push(weatherTmp);
+                    const weatherPcp = {
+                        name:"관측강수량",
+                        data:[],
+                    }
 
-                    setChart(series);
+                    //데이터의 길이가 서로 같은 지 체크(06, 09, 12, 15, 18, 21, 23의 7시간)
+                    if(fcstSize != weatherSize) {
+                        alert("데이터가 유효하지 않습니다.");
+                        return;
+                    }
+
+                    let tableContents = "<tr style='height: fit-content;'>"
+                    tableContents += "<td>"+"&nbsp;&nbsp;"+"</td>"
+                    tableContents += "<td>"+"&nbsp;&nbsp;"+"</td>"
+                    tableContents += "<td style='color: #2BAFFA; font-size: 1em; text-align: right;'>"+"예보"+"</td>"
+                    tableContents += "<td style='color: #FDB845; font-size: 1em; text-align: right;'>"+"관측</td>"
+                    tableContents += "</tr>";
+
+                    for (let i = 0; i < fcstSize; i++) {
+                        fcstTmp.data.push(Number(fcstData[i].tmp));
+                        weatherTmp.data.push(Number(weatherData[i].tmp));
+                        fcstHumidity.data.push(Number(fcstData[i].reh));
+                        weatherHumidity.data.push(Number(weatherData[i].reh));
+                        let fcstDataPcp = fcstData[i].pcp;
+                        let weatherDataPcp = weatherData[i].pcp;
+
+                        if(fcstDataPcp.trim() == "강수없음"){
+                            fcstPcp.data.push(0);
+                        }else{
+                            fcstPcp.data.push(Number(fcstDataPcp.replace(/[a-zA-Z]/gi,'')));
+                        }
+
+                        if(!weatherDataPcp){
+                            weatherPcp.data.push(0);
+                        }else{
+                            weatherPcp.data.push(Number(weatherDataPcp));
+                        }
+
+
+                        tableContents += "<tr>"
+                        tableContents += "<td>"+fcstData[i].fcstTime.substring(0, 2)+"시"+"</td>"
+                        tableContents += "<td><i class=\"fa-solid fa-droplet font-fcst \"></i>&nbsp;&nbsp;"+fcstData[i].pop + "%"+"</td>"
+                        tableContents += "<td>"+fcstData[i].tmp + "°"+"</td>"
+                        tableContents += "<td>"+weatherData[i].tmp + "°</td>"
+                        tableContents += "</tr>"
+                    }
+
+                    temperatureSeries.push(fcstTmp);
+                    temperatureSeries.push(weatherTmp);
+                    humiditySeries.push(fcstHumidity);
+                    humiditySeries.push(weatherHumidity);
+                    pcpSeries.push(fcstPcp);
+                    pcpSeries.push(weatherPcp);
+
+                    const temperatureData = {
+                        categories: ['06시', '09시', '12시', '15시', '18시', '21시', '23시'],
+                        series: temperatureSeries,
+                    }
+
+                    const humidityData = {
+                        categories: ['06시', '09시', '12시', '15시', '18시', '21시', '23시'],
+                        series: humiditySeries,
+                    }
+
+                    const pcpData = {
+                        categories: ['06시', '09시', '12시', '15시', '18시', '21시', '23시'],
+                        series: pcpSeries,
+                    }
+
+                    temperatureSheet.setData(temperatureData);
+                    humiditySheet.setData(humidityData);
+                    console.log(pcpData);
+                    rainfallSheet.setData(pcpData);
+                    document.querySelector('#second-row .col-md-3 table').innerHTML = tableContents;
                 }
             }
         });
     });
 
     function init(){
+        const chartWidth = document.getElementById('temperatureSheet-container').clientWidth;
+        const chartHeight = document.getElementById('temperatureSheet-container').clientHeight;
         const selectedMenu = document.querySelectorAll('.menu-1');
         selectedMenu[0].classList.add('text-warning');
         selectedMenu[1].classList.add('text-warning');
         Util.setForm();
-        setChart(null);
-    }
 
-    function doAction(sAction){
-        if(sAction == 'getForecast'){
-            const param = {}
-            param.method = "GET";
-            param.url = "/forecast/"+Util.removeMinusChar(when.value)+"/"+Number(where.value);
-            param.async = false;
-            const fcstData = Util.getAjax(param, null);
-            return fcstData;
-        }else if(sAction == 'getWeather'){
-            const param = {}
-            param.method = "GET";
-            param.url = "/weather/"+Util.removeMinusChar(when.value)+"/"+Number(where.value);
-            param.async = false;
-            const weatherData = Util.getAjax(param, null);
-            return weatherData;
-        }
-    }
-
-    function setChart(series){
-        const chartWidth = document.getElementById('temperatureSheet-container').clientWidth;
-        const chartHeight = document.getElementById('temperatureSheet-container').clientHeight;
         temperatureSheet = toastui.Chart.lineChart({
             el : document.getElementById('temperatureSheet'),
             data :{
-                    categories: [
-                        '06시',
-                        '12시',
-                        '15시',
-                        '18시',
-                        '21시',
-                        '23시',
-                    ],
-                    series: (series)?series:[],
+                categories: [
+                    '06시',
+                    '09시',
+                    '12시',
+                    '15시',
+                    '18시',
+                    '21시',
+                    '23시',
+                ],
+                series: [
+                    {
+                        name: '예보기온',
+                        data: [],
+                    },
+                    {
+                        name: '관측기온',
+                        data: [],
+                    },
+                ],
             },
 
             options : {
@@ -124,7 +221,13 @@
                 },
 
                 legend: {
-                    visible: false,
+                    visible: true,
+                    showCheckbox:false,
+                    align:"bottom",
+                },
+
+                lang: {
+                    noData: 'No Data',
                 },
 
                 tooltip: {
@@ -161,9 +264,16 @@
                         backgroundColor: 'rgba(255, 255, 255, 0)',
                     },
 
+                    noData: {
+                        fontFamily: 'NanumPenScript-Regular',
+                        fontSize:24,
+                        fontWeight: 'bold',
+                        color: 'white',
+                    },
+
                     legend: {
                         label: {
-                            fontFamily: 'GothicA1-Light',
+                            fontFamily: 'NotoSansKR-Regular',
                             fontSize: 12,
                             color: 'rgb(255, 255, 255)',
                         }
@@ -171,7 +281,7 @@
 
                     xAxis: {
                         label: {
-                            fontFamily: 'GothicA1-Light',
+                            fontFamily: 'NotoSansKR-Regular',
                             fontWeight:'bold',
                             fontSize: 12,
                             color: 'white'
@@ -182,7 +292,7 @@
 
                     yAxis: {
                         label: {
-                            fontFamily: 'GothicA1-Light',
+                            fontFamily: 'NotoSansKR-Regular',
                             fontWeight:'bold',
                             fontSize: 12,
                             color: 'white'
@@ -199,7 +309,274 @@
 
             },
         });
+
+        humiditySheet = toastui.Chart.barChart({
+            el : document.getElementById('humidity-sheet'),
+            data :{
+                categories: [
+                    '06시',
+                    '09시',
+                    '12시',
+                    '15시',
+                    '18시',
+                    '21시',
+                    '23시',
+                ],
+
+                series: [
+                    {
+                        name: '예보습도',
+                        data: [],
+                    },
+                    {
+                        name: '관측습도',
+                        data: [],
+                    },
+                ],
+            },
+
+            options : {
+
+                chart: {
+                    width:Number(chartWidth) * 0.9,
+                    height:Number(chartHeight),
+                },
+
+                legend: {
+                    visible: true,
+                    showCheckbox:false,
+                    align:"bottom",
+                },
+
+                lang: {
+                    noData: 'No Data',
+                },
+
+                tooltip: {
+                    formatter: (value) => `${value}%`,
+                },
+
+                exportMenu: {
+                    visible: false
+                },
+
+                xAxis: {
+                    label: {
+                        interval: 1,
+                    },
+                    tick: {
+                        interval: 1,
+                    },
+                    title: {
+                        offsetX: 0,
+                        offsetY: 0,
+                        visible:false,
+                    },
+                },
+
+                yAxis: {
+                    label: {
+                        interval: 1,
+                    },
+                },
+
+                theme: {
+                    chart: {
+                        fontFamily: 'Malgun Gothic',
+                        backgroundColor: 'rgba(255, 255, 255, 0)',
+                    },
+
+                    noData: {
+                        fontFamily: 'NanumPenScript-Regular',
+                        fontSize:24,
+                        fontWeight: 'bold',
+                        color: 'white',
+                    },
+
+                    legend: {
+                        label: {
+                            fontFamily: 'NotoSansKR-Regular',
+                            fontSize: 12,
+                            color: 'rgb(255, 255, 255)',
+                        }
+                    },
+
+                    xAxis: {
+                        label: {
+                            fontFamily: 'NotoSansKR-Regular',
+                            fontWeight:'bold',
+                            fontSize: 12,
+                            color: 'white'
+                        },
+                        color:'white',
+                        width: '3',
+                    },
+
+                    yAxis: {
+                        label: {
+                            fontFamily: 'NotoSansKR-Regular',
+                            fontWeight:'bold',
+                            fontSize: 12,
+                            color: 'white'
+                        },
+                        color:'white',
+                        width: '3',
+                    },
+
+                },
+
+                series: {
+                    spline: true,
+                },
+
+            },
+        });
+
+        rainfallSheet = toastui.Chart.barChart({
+            el : document.getElementById('rainfall-sheet'),
+            data :{
+                categories: [
+                    '06시',
+                    '09시',
+                    '12시',
+                    '15시',
+                    '18시',
+                    '21시',
+                    '23시',
+                ],
+
+                series: [
+                    {
+                        name: '예보습도',
+                        data: [],
+                    },
+                    {
+                        name: '관측습도',
+                        data: [],
+                    },
+                ],
+            },
+
+            options : {
+
+                chart: {
+                    width:Number(chartWidth) * 0.9,
+                    height:Number(chartHeight),
+                },
+
+                legend: {
+                    visible: true,
+                    showCheckbox:false,
+                    align:"bottom",
+                },
+
+                lang: {
+                    noData: 'No Data',
+                },
+
+                tooltip: {
+                    formatter: (value) => `${value}%`,
+                },
+
+                exportMenu: {
+                    visible: false
+                },
+
+                xAxis: {
+                    label: {
+                        interval: 1,
+                    },
+                    tick: {
+                        interval: 1,
+                    },
+                    title: {
+                        offsetX: 0,
+                        offsetY: 0,
+                        visible:false,
+                    },
+                },
+
+                yAxis: {
+                    label: {
+                        interval: 1,
+                    },
+                },
+
+                theme: {
+                    chart: {
+                        fontFamily: 'Malgun Gothic',
+                        backgroundColor: 'rgba(255, 255, 255, 0)',
+                    },
+
+                    noData: {
+                        fontFamily: 'NanumPenScript-Regular',
+                        fontSize:24,
+                        fontWeight: 'bold',
+                        color: 'white',
+                    },
+
+                    legend: {
+                        label: {
+                            fontFamily: 'NotoSansKR-Regular',
+                            fontSize: 12,
+                            color: 'rgb(255, 255, 255)',
+                        }
+                    },
+
+                    xAxis: {
+                        label: {
+                            fontFamily: 'NotoSansKR-Regular',
+                            fontWeight:'bold',
+                            fontSize: 12,
+                            color: 'white'
+                        },
+                        color:'white',
+                        width: '3',
+                    },
+
+                    yAxis: {
+                        label: {
+                            fontFamily: 'NotoSansKR-Regular',
+                            fontWeight:'bold',
+                            fontSize: 12,
+                            color: 'white'
+                        },
+                        color:'white',
+                        width: '3',
+                    },
+
+                },
+
+                series: {
+                    spline: true,
+                },
+
+            },
+        });
+
     }
+
+    function doAction(sAction){
+        if(sAction == 'getForecast'){
+            const param = {}
+            param.method = "GET";
+            param.url = "/forecast/"+Util.removeMinusChar(when.value)+"/"+Number(where.value);
+            param.async = false;
+            const fcstData = Util.getAjax(param, null);
+            return fcstData;
+        }else if(sAction == 'getWeather'){
+            const param = {}
+            param.method = "GET";
+            param.url = "/weather/"+Util.removeMinusChar(when.value)+"/"+Number(where.value);
+            param.async = false;
+            const weatherData = Util.getAjax(param, null);
+            return weatherData;
+        }
+    }
+
+
+
+
 
 
 </script>
