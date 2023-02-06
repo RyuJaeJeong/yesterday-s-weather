@@ -25,6 +25,12 @@
   color: #2BAFFA !important;
 }
 
+@media (min-width: 768px) {
+  .col-md-3 {
+    flex: 0 0 auto;
+    width: 24%;
+  }
+}
 /**********************************************
   common stop
 **********************************************/
@@ -184,11 +190,16 @@ i {
   color: white;
 }
 #yesterday-container #second-row table tr td:nth-child(3), #yesterday-container #second-row table td td:nth-child(3) {
+  text-align: center !important;
+  font-size: 0.9em;
+  color: white;
+}
+#yesterday-container #second-row table tr td:nth-child(4), #yesterday-container #second-row table td td:nth-child(4) {
   text-align: right !important;
   font-size: 1em;
   color: white;
 }
-#yesterday-container #second-row table tr td:nth-child(4), #yesterday-container #second-row table td td:nth-child(4) {
+#yesterday-container #second-row table tr td:nth-child(5), #yesterday-container #second-row table td td:nth-child(5) {
   text-align: right !important;
   font-size: 1em;
   padding-right: 5%;
@@ -216,13 +227,7 @@ i {
     margin-bottom: 5%;
   }
   #yesterday-container #first-row {
-    height: 80% !important;
-  }
-  #yesterday-container #first-row .col-md-8 {
-    height: 48%;
-  }
-  #yesterday-container #first-row .col-md-3 {
-    height: 50%;
+    height: 40% !important;
   }
 }
 /**********************************************

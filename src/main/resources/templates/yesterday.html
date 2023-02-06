@@ -40,7 +40,11 @@
       <div class="col-md-3 p-0 rounded">
           <table class="w-100 h-100 align-items-center "></table>
       </div>
-      <div class="col-md-6 p-0  rounded"></div>
+      <div class="col-md-3 p-0  rounded">
+          <table class="w-100 h-100 align-items-center "></table>
+      </div>
+      <div class="col-md-3 p-0  rounded"></div>
+      <div class="col-md-3 p-0  rounded"></div>
   </div>
 </div>     <!-- second-row end -->
 
@@ -52,6 +56,7 @@
     const when = document.querySelector('input[type=\'date\']');
     let temperatureSheet;
     let rainfallSheet;
+    let snowSheet;
     let humiditySheet;
 
     document.addEventListener('DOMContentLoaded', function (){
@@ -73,6 +78,7 @@
                     const temperatureSeries = [];
                     const humiditySeries = [];
                     const pcpSeries = [];
+                    const snowSeries = [];
 
 
                     //차트에 바인딩 할 예보 데이터
@@ -88,6 +94,11 @@
 
                     const fcstPcp = {
                         name:"예보강수량",
+                        data:[],
+                    }
+
+                    const fcstSno = {
+                        name:"예보적설량",
                         data:[],
                     }
 
@@ -107,6 +118,11 @@
                         data:[],
                     }
 
+                    const weatherSno = {
+                        name:"관측적설량",
+                        data:[],
+                    }
+
                     //데이터의 길이가 서로 같은 지 체크(06, 09, 12, 15, 18, 21, 23의 7시간)
                     if(fcstSize != weatherSize) {
                         alert("데이터가 유효하지 않습니다.");
@@ -114,11 +130,12 @@
                     }
 
                     let tableContents = "<tr style='height: fit-content;'>"
-                    tableContents += "<td>"+"&nbsp;&nbsp;"+"</td>"
-                    tableContents += "<td>"+"&nbsp;&nbsp;"+"</td>"
-                    tableContents += "<td style='color: #2BAFFA; font-size: 1em; text-align: right;'>"+"예보"+"</td>"
-                    tableContents += "<td style='color: #FDB845; font-size: 1em; text-align: right;'>"+"관측</td>"
-                    tableContents += "</tr>";
+                    tableContents +=    "<td>"+"&nbsp;&nbsp;"+"</td>"
+                    tableContents +=    "<td style='color: #2BAFFA; font-size: 1em; text-align: right;'>"+"예보"+"</td>"
+                    tableContents +=    "<td style='color: #FDB845; font-size: 1em; text-align: right;'>"+"관측</td>"
+                    tableContents +=    "<td style='color: #2BAFFA; font-size: 1em; text-align: right;'>"+"예보"+"</td>"
+                    tableContents +=    "<td style='color: #FDB845; font-size: 1em; text-align: right;'>"+"관측</td>"
+                    tableContents +=    "</tr>";
 
                     for (let i = 0; i < fcstSize; i++) {
                         fcstTmp.data.push(Number(fcstData[i].tmp));
@@ -127,11 +144,20 @@
                         weatherHumidity.data.push(Number(weatherData[i].reh));
                         let fcstDataPcp = fcstData[i].pcp;
                         let weatherDataPcp = weatherData[i].pcp;
+                        let fcstDataSno = fcstData[i].sno;
+                        let weatherDataSno = weatherData[i].sno;
 
                         if(fcstDataPcp.trim() == "강수없음"){
                             fcstPcp.data.push(0);
                         }else{
                             fcstPcp.data.push(Number(fcstDataPcp.replace(/[a-zA-Z]/gi,'')));
+                        }
+
+                        if(fcstDataSno.trim() == "적설없음"){
+                            fcstSno.data.push(0);
+                        }else{
+                            fcstDataSno = fcstDataSno.replace(/[가-힣]/gi, '');
+                            fcstSno.data.push(Number(fcstDataSno.replace(/[a-zA-Z]/gi,'')));
                         }
 
                         if(!weatherDataPcp){
@@ -140,10 +166,17 @@
                             weatherPcp.data.push(Number(weatherDataPcp));
                         }
 
+                        if(!weatherDataSno){
+                            weatherSno.data.push(0);
+                        }else{
+                            weatherSno.data.push(Number(weatherDataSno));
+                        }
+
 
                         tableContents += "<tr>"
                         tableContents += "<td>"+fcstData[i].fcstTime.substring(0, 2)+"시"+"</td>"
-                        tableContents += "<td><i class=\"fa-solid fa-droplet font-fcst \"></i>&nbsp;&nbsp;"+fcstData[i].pop + "%"+"</td>"
+                        tableContents += "<td>&nbsp;&nbsp;</td>"
+                        tableContents += "<td>&nbsp;&nbsp;</td>"
                         tableContents += "<td>"+fcstData[i].tmp + "°"+"</td>"
                         tableContents += "<td>"+weatherData[i].tmp + "°</td>"
                         tableContents += "</tr>"
@@ -155,6 +188,8 @@
                     humiditySeries.push(weatherHumidity);
                     pcpSeries.push(fcstPcp);
                     pcpSeries.push(weatherPcp);
+                    snowSeries.push(fcstSno);
+                    snowSeries.push(weatherSno);
 
                     const temperatureData = {
                         categories: ['06시', '09시', '12시', '15시', '18시', '21시', '23시'],
@@ -171,10 +206,17 @@
                         series: pcpSeries,
                     }
 
+                    const snoData = {
+                        categories: ['06시', '09시', '12시', '15시', '18시', '21시', '23시'],
+                        series: snowSeries,
+                    }
+
+                    console.log(snoData);
+
                     temperatureSheet.setData(temperatureData);
                     humiditySheet.setData(humidityData);
-                    console.log(pcpData);
                     rainfallSheet.setData(pcpData);
+                    snowSheet.setData(snoData);
                     document.querySelector('#second-row .col-md-3 table').innerHTML = tableContents;
                 }
             }
@@ -432,7 +474,7 @@
             },
         });
 
-        rainfallSheet = toastui.Chart.barChart({
+        rainfallSheet = toastui.Chart.columnChart({
             el : document.getElementById('rainfall-sheet'),
             data :{
                 categories: [
@@ -475,7 +517,129 @@
                 },
 
                 tooltip: {
-                    formatter: (value) => `${value}%`,
+                    formatter: (value) => `${value}mm`,
+                },
+
+                exportMenu: {
+                    visible: false
+                },
+
+                xAxis: {
+                    label: {
+                        interval: 1,
+                    },
+                    tick: {
+                        interval: 1,
+                    },
+                    title: {
+                        offsetX: 0,
+                        offsetY: 0,
+                        visible:false,
+                    },
+                },
+
+                yAxis: {
+                    label: {
+                        interval: 1,
+                    },
+                },
+
+                theme: {
+                    chart: {
+                        fontFamily: 'Malgun Gothic',
+                        backgroundColor: 'rgba(255, 255, 255, 0)',
+                    },
+
+                    noData: {
+                        fontFamily: 'NanumPenScript-Regular',
+                        fontSize:24,
+                        fontWeight: 'bold',
+                        color: 'white',
+                    },
+
+                    legend: {
+                        label: {
+                            fontFamily: 'NotoSansKR-Regular',
+                            fontSize: 12,
+                            color: 'rgb(255, 255, 255)',
+                        }
+                    },
+
+                    xAxis: {
+                        label: {
+                            fontFamily: 'NotoSansKR-Regular',
+                            fontWeight:'bold',
+                            fontSize: 12,
+                            color: 'white'
+                        },
+                        color:'white',
+                        width: '3',
+                    },
+
+                    yAxis: {
+                        label: {
+                            fontFamily: 'NotoSansKR-Regular',
+                            fontWeight:'bold',
+                            fontSize: 12,
+                            color: 'white'
+                        },
+                        color:'white',
+                        width: '3',
+                    },
+
+                },
+
+                series: {
+                    spline: true,
+                },
+
+            },
+        });
+
+        snowSheet = toastui.Chart.columnChart({
+            el : document.getElementById('snow-sheet'),
+            data :{
+                categories: [
+                    '06시',
+                    '09시',
+                    '12시',
+                    '15시',
+                    '18시',
+                    '21시',
+                    '23시',
+                ],
+
+                series: [
+                    {
+                        name: '예보적설량',
+                        data: [],
+                    },
+                    {
+                        name: '관측적설량',
+                        data: [],
+                    },
+                ],
+            },
+
+            options : {
+
+                chart: {
+                    width:Number(chartWidth) * 0.9,
+                    height:Number(chartHeight),
+                },
+
+                legend: {
+                    visible: true,
+                    showCheckbox:false,
+                    align:"bottom",
+                },
+
+                lang: {
+                    noData: 'No Data',
+                },
+
+                tooltip: {
+                    formatter: (value) => `${value}cm`,
                 },
 
                 exportMenu: {

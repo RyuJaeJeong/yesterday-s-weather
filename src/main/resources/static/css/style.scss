@@ -29,6 +29,14 @@
   color: #2BAFFA !important;
 }
 
+@media (min-width: 768px){
+  .col-md-3 {
+    flex: 0 0 auto;
+    width: 24%;
+  }
+}
+
+
 /**********************************************
   common stop
 **********************************************/
@@ -233,12 +241,18 @@ i {
         }
 
         td:nth-child(3){
+          text-align: center !important;
+          font-size: 0.9em;
+          color: white;
+        }
+
+        td:nth-child(4){
           text-align: right !important;
           font-size: 1em;
           color: white;
         }
 
-        td:nth-child(4){
+        td:nth-child(5){
           text-align: right !important;
           font-size: 1em;
           padding-right: 5%;
@@ -248,7 +262,6 @@ i {
       }
     }
   }
-
 }
 
 @media screen and (max-width: 768px) {
@@ -277,14 +290,7 @@ i {
     }
 
     #first-row{
-      height: 80% !important;
-      .col-md-8 {
-        height: 48%;
-      }
-      .col-md-3 {
-        height: 50%;
-      }
-
+      height: 40% !important;
     }
 
   }
