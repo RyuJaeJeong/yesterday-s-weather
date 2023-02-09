@@ -9,11 +9,37 @@
     <input type="date" class="form-control mx-2 rounded" >
   </div>
   <div id="first-row" class="row w-100 mb-3 justify-content-between">
-      <div id="temperatureSheet-container" class="col-md-12 p-0 rounded">
+    <div class="card fcst-card col-md-3 p-0 rounded">
+        <div class="card-header">예보 최저</div>
+        <div class="card-body">
+            <h5 class="card-title"> - °</h5>
+        </div>
+    </div>
+    <div class="card weather-card col-md-3 p-0  rounded">
+        <div class="card-header">관측 최저</div>
+        <div class="card-body">
+            <h5 class="card-title"> - °</h5>
+        </div>
+    </div>
+    <div class="card col-md-3 fcst-card p-0  rounded">
+        <div class="card-header">예보 최고</div>
+        <div class="card-body">
+            <h5 class="card-title"> - °</h5>
+        </div>
+    </div>
+    <div class="card weather-card col-md-3 p-0  rounded">
+        <div class="card-header">관측 최저</div>
+        <div class="card-body">
+            <h5 class="card-title"> - °</h5>
+        </div>
+    </div>
+  </div>
+  <div id="second-row" class="row w-100 justify-content-between">
+      <div id="temperatureSheet-container" class="col-md-8 p-0 rounded">
           <div id="carouselExample" class="carousel slide w-100 h-100">
               <div class="carousel-inner w-100 h-100" style="text-align: center; vertical-align: middle !important;">
                   <div id="" class="carousel-item w-100 h-100 active">
-                      <div id="temperatureSheet" ></div>
+                      <div id="temperature-sheet" ></div>
                   </div>
                   <div class="carousel-item w-100 h-100">
                       <div id="rainfall-sheet" ></div>
@@ -23,6 +49,9 @@
                   </div>
                   <div class="carousel-item w-100 h-100">
                       <div id="humidity-sheet" ></div>
+                  </div>
+                  <div class="carousel-item w-100 h-100">
+                      <div id="wsd-sheet" ></div>
                   </div>
               </div>
               <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
@@ -35,17 +64,9 @@
               </button>
           </div>
       </div>
+      <div class="col-md-4 rounded"></div>
   </div>    <!-- first-row end -->
-  <div id="second-row" class="row w-100 h-40 justify-content-between">
-      <div class="col-md-3 p-0 rounded">
-          <table class="w-100 h-100 align-items-center "></table>
-      </div>
-      <div class="col-md-3 p-0  rounded">
-          <table class="w-100 h-100 align-items-center "></table>
-      </div>
-      <div class="col-md-3 p-0  rounded"></div>
-      <div class="col-md-3 p-0  rounded"></div>
-  </div>
+
 </div>     <!-- second-row end -->
 
 <script th:replace="~{fragments/common.html :: script}"></script>
@@ -54,10 +75,8 @@
     const searchCondition = document.getElementById('search-condition');
     const where = document.querySelector('#search-condition select');
     const when = document.querySelector('input[type=\'date\']');
-    let temperatureSheet;
-    let rainfallSheet;
-    let snowSheet;
-    let humiditySheet;
+    let temperatureSheet, rainfallSheet, snowSheet, humiditySheet, wsdSheet;
+
 
     document.addEventListener('DOMContentLoaded', function (){
         init();
@@ -68,157 +87,24 @@
 
         searchCondition.addEventListener('change', function(){
            if(where.value && when.value){
-                const fcstData = doAction('getForecast');
-                const weatherData = doAction('getWeather');
-                console.log(fcstData);
-                console.log(weatherData);
-                if(fcstData && weatherData){
-                    const fcstSize = fcstData.length;
-                    const weatherSize = weatherData.length;
-                    const temperatureSeries = [];
-                    const humiditySeries = [];
-                    const pcpSeries = [];
-                    const snowSeries = [];
+               const data = doAction('seperateData');
 
+               //상단 카드 세팅
+               const fcstCard = document.querySelectorAll('#first-row .fcst-card .card-body .card-title')
+               fcstCard[0].innerText = data.fcstTMN + "°";
+               fcstCard[1].innerText = data.fcstTMX + "°";
 
-                    //차트에 바인딩 할 예보 데이터
-                    const fcstTmp = {
-                        name:"예보기온",
-                        data:[],
-                    };
+               const weatherCard = document.querySelectorAll('#first-row .weather-card .card-body .card-title')
+               weatherCard[0].innerText = data.weatherTMN + "°";
+               weatherCard[1].innerText = data.weatherTMX + "°";
 
-                    const fcstHumidity = {
-                        name:"예보습도",
-                        data:[],
-                    }
+               //차트 세팅
+               temperatureSheet.setData(data.temperatureData);
+               rainfallSheet.setData(data.pcpData);
+               snowSheet.setData(data.snoData);
+               humiditySheet.setData(data.humidityData);
+               wsdSheet.setData(data.wsdData);
 
-                    const fcstPcp = {
-                        name:"예보강수량",
-                        data:[],
-                    }
-
-                    const fcstSno = {
-                        name:"예보적설량",
-                        data:[],
-                    }
-
-                    //차트에 바인딩 할 관측 데이터
-                    const weatherTmp = {
-                        name:"관측기온",
-                        data:[],
-                    };
-
-                    const weatherHumidity = {
-                        name:"관측습도",
-                        data:[],
-                    }
-
-                    const weatherPcp = {
-                        name:"관측강수량",
-                        data:[],
-                    }
-
-                    const weatherSno = {
-                        name:"관측적설량",
-                        data:[],
-                    }
-
-                    //데이터의 길이가 서로 같은 지 체크(06, 09, 12, 15, 18, 21, 23의 7시간)
-                    if(fcstSize != weatherSize) {
-                        alert("데이터가 유효하지 않습니다.");
-                        return;
-                    }
-
-                    let tableContents = "<tr style='height: fit-content;'>"
-                    tableContents +=    "<td>"+"&nbsp;&nbsp;"+"</td>"
-                    tableContents +=    "<td style='color: #2BAFFA; font-size: 1em; text-align: right;'>"+"예보"+"</td>"
-                    tableContents +=    "<td style='color: #FDB845; font-size: 1em; text-align: right;'>"+"관측</td>"
-                    tableContents +=    "<td style='color: #2BAFFA; font-size: 1em; text-align: right;'>"+"예보"+"</td>"
-                    tableContents +=    "<td style='color: #FDB845; font-size: 1em; text-align: right;'>"+"관측</td>"
-                    tableContents +=    "</tr>";
-
-                    for (let i = 0; i < fcstSize; i++) {
-                        fcstTmp.data.push(Number(fcstData[i].tmp));
-                        weatherTmp.data.push(Number(weatherData[i].tmp));
-                        fcstHumidity.data.push(Number(fcstData[i].reh));
-                        weatherHumidity.data.push(Number(weatherData[i].reh));
-                        let fcstDataPcp = fcstData[i].pcp;
-                        let weatherDataPcp = weatherData[i].pcp;
-                        let fcstDataSno = fcstData[i].sno;
-                        let weatherDataSno = weatherData[i].sno;
-
-                        if(fcstDataPcp.trim() == "강수없음"){
-                            fcstPcp.data.push(0);
-                        }else{
-                            fcstPcp.data.push(Number(fcstDataPcp.replace(/[a-zA-Z]/gi,'')));
-                        }
-
-                        if(fcstDataSno.trim() == "적설없음"){
-                            fcstSno.data.push(0);
-                        }else{
-                            fcstDataSno = fcstDataSno.replace(/[가-힣]/gi, '');
-                            fcstSno.data.push(Number(fcstDataSno.replace(/[a-zA-Z]/gi,'')));
-                        }
-
-                        if(!weatherDataPcp){
-                            weatherPcp.data.push(0);
-                        }else{
-                            weatherPcp.data.push(Number(weatherDataPcp));
-                        }
-
-                        if(!weatherDataSno){
-                            weatherSno.data.push(0);
-                        }else{
-                            weatherSno.data.push(Number(weatherDataSno));
-                        }
-
-
-                        tableContents += "<tr>"
-                        tableContents += "<td>"+fcstData[i].fcstTime.substring(0, 2)+"시"+"</td>"
-                        tableContents += "<td>&nbsp;&nbsp;</td>"
-                        tableContents += "<td>&nbsp;&nbsp;</td>"
-                        tableContents += "<td>"+fcstData[i].tmp + "°"+"</td>"
-                        tableContents += "<td>"+weatherData[i].tmp + "°</td>"
-                        tableContents += "</tr>"
-                    }
-
-                    temperatureSeries.push(fcstTmp);
-                    temperatureSeries.push(weatherTmp);
-                    humiditySeries.push(fcstHumidity);
-                    humiditySeries.push(weatherHumidity);
-                    pcpSeries.push(fcstPcp);
-                    pcpSeries.push(weatherPcp);
-                    snowSeries.push(fcstSno);
-                    snowSeries.push(weatherSno);
-
-                    const temperatureData = {
-                        categories: ['06시', '09시', '12시', '15시', '18시', '21시', '23시'],
-                        series: temperatureSeries,
-                    }
-
-                    const humidityData = {
-                        categories: ['06시', '09시', '12시', '15시', '18시', '21시', '23시'],
-                        series: humiditySeries,
-                    }
-
-                    const pcpData = {
-                        categories: ['06시', '09시', '12시', '15시', '18시', '21시', '23시'],
-                        series: pcpSeries,
-                    }
-
-                    const snoData = {
-                        categories: ['06시', '09시', '12시', '15시', '18시', '21시', '23시'],
-                        series: snowSeries,
-                    }
-
-                    console.log(snoData);
-
-                    temperatureSheet.setData(temperatureData);
-                    humiditySheet.setData(humidityData);
-                    rainfallSheet.setData(pcpData);
-                    snowSheet.setData(snoData);
-                    document.querySelector('#second-row .col-md-3 table').innerHTML = tableContents;
-                }
             }
         });
     });
@@ -232,7 +118,7 @@
         Util.setForm();
 
         temperatureSheet = toastui.Chart.lineChart({
-            el : document.getElementById('temperatureSheet'),
+            el : document.getElementById('temperature-sheet'),
             data :{
                 categories: [
                     '06시',
@@ -718,6 +604,127 @@
             },
         });
 
+        wsdSheet = toastui.Chart.lineChart({
+            el : document.getElementById('wsd-sheet'),
+            data :{
+                categories: [
+                    '06시',
+                    '09시',
+                    '12시',
+                    '15시',
+                    '18시',
+                    '21시',
+                    '23시',
+                ],
+                series: [
+                    {
+                        name: '예보풍속',
+                        data: [],
+                    },
+                    {
+                        name: '관측풍속',
+                        data: [],
+                    },
+                ],
+            },
+
+            options : {
+
+                chart: {
+                    width:Number(chartWidth) * 0.9,
+                    height:Number(chartHeight),
+                },
+
+                legend: {
+                    visible: true,
+                    showCheckbox:false,
+                    align:"bottom",
+                },
+
+                lang: {
+                    noData: 'No Data',
+                },
+
+                tooltip: {
+                    formatter: (value) => `${value}m/s`,
+                },
+
+                exportMenu: {
+                    visible: false
+                },
+
+                xAxis: {
+                    label: {
+                        interval: 1,
+                    },
+                    tick: {
+                        interval: 1,
+                    },
+                    title: {
+                        offsetX: 0,
+                        offsetY: 0,
+                        visible:false,
+                    },
+                },
+
+                yAxis: {
+                    label: {
+                        interval: 1,
+                    },
+                },
+
+                theme: {
+                    chart: {
+                        fontFamily: 'Malgun Gothic',
+                        backgroundColor: 'rgba(255, 255, 255, 0)',
+                    },
+
+                    noData: {
+                        fontFamily: 'NanumPenScript-Regular',
+                        fontSize:24,
+                        fontWeight: 'bold',
+                        color: 'white',
+                    },
+
+                    legend: {
+                        label: {
+                            fontFamily: 'NotoSansKR-Regular',
+                            fontSize: 12,
+                            color: 'rgb(255, 255, 255)',
+                        }
+                    },
+
+                    xAxis: {
+                        label: {
+                            fontFamily: 'NotoSansKR-Regular',
+                            fontWeight:'bold',
+                            fontSize: 12,
+                            color: 'white'
+                        },
+                        color:'white',
+                        width: '3',
+                    },
+
+                    yAxis: {
+                        label: {
+                            fontFamily: 'NotoSansKR-Regular',
+                            fontWeight:'bold',
+                            fontSize: 12,
+                            color: 'white'
+                        },
+                        color:'white',
+                        width: '3',
+                    },
+
+                },
+
+                series: {
+                    spline: true,
+                },
+
+            },
+        });
+
     }
 
     function doAction(sAction){
@@ -735,6 +742,191 @@
             param.async = false;
             const weatherData = Util.getAjax(param, null);
             return weatherData;
+        }else if(sAction == 'seperateData'){     //받아온 데이터를 바인딩 할 형태로 나누어줌.
+            const resultData = {}
+            const fcstData = doAction('getForecast');
+            const weatherData = doAction('getWeather');
+            const fcstSize = fcstData.length;
+            const weatherSize = weatherData.length;
+
+            //데이터의 길이가 서로 같은 지 체크(06, 09, 12, 15, 18, 21, 23의 7시간)
+            if(fcstSize != weatherSize) {
+                alert("데이터가 유효하지 않습니다.");
+                return;
+            }
+
+            //온도
+            const temperatureSeries = [];
+            const fcstTmp = {
+                name:"예보기온",
+                data:[],
+            };
+
+            const weatherTmp = {
+                name:"관측기온",
+                data:[],
+            };
+
+            //습도
+            const humiditySeries = [];
+            const fcstHumidity = {
+                name:"예보습도",
+                data:[],
+            };
+            const weatherHumidity = {
+                name:"관측습도",
+                data:[],
+            };
+
+            //강수량
+            const pcpSeries = [];
+            const fcstPcp = {
+                name:"예보강수량",
+                data:[],
+            };
+
+            const weatherPcp = {
+                name:"관측강수량",
+                data:[],
+            };
+
+            //적설량
+            const snowSeries = [];
+            const fcstSno = {
+                name:"예보적설량",
+                data:[],
+            };
+
+            const weatherSno = {
+                name:"관측적설량",
+                data:[],
+            };
+
+            //풍향
+            const vecSeries = [];
+            const fcstVec = {
+                name:"예보풍향",
+                data:[],
+            };
+
+            const weatherVec = {
+                name:"관측풍향",
+                data:[],
+            };
+
+            //풍송
+            const wsdSeries = [];
+            const fcstWsd = {
+                name:"예보풍속",
+                data:[],
+            };
+
+            const weatherWsd = {
+                name:"관측풍속",
+                data:[],
+            };
+
+
+            for (let i = 0; i < fcstSize; i++) {
+                fcstTmp.data.push(Number(fcstData[i].tmp));
+                weatherTmp.data.push(Number(weatherData[i].tmp));
+
+                fcstHumidity.data.push(Number(fcstData[i].reh));
+                weatherHumidity.data.push(Number(weatherData[i].reh));
+
+                fcstVec.data.push(Number(fcstData[i].vec));
+                weatherVec.data.push(Number(weatherData[i].vec));
+
+                fcstWsd.data.push(Number(fcstData[i].wsd));
+                weatherWsd.data.push(Number(weatherData[i].wsd));
+
+                let fcstDataPcp = fcstData[i].pcp;
+                let weatherDataPcp = weatherData[i].pcp;
+                let fcstDataSno = fcstData[i].sno;
+                let weatherDataSno = weatherData[i].sno;
+
+                if(fcstDataPcp.trim() == "강수없음"){
+                    fcstPcp.data.push(0);
+                }else{
+                    fcstPcp.data.push(Number(fcstDataPcp.replace(/[a-zA-Z]/gi,'')));
+                }
+
+                if(!weatherDataPcp){
+                    weatherPcp.data.push(0);
+                }else{
+                    weatherPcp.data.push(Number(weatherDataPcp));
+                }
+
+                if(fcstDataSno.trim() == "적설없음"){
+                    fcstSno.data.push(0);
+                }else{
+                    fcstDataSno = fcstDataSno.replace(/[가-힣]/gi, '');
+                    fcstSno.data.push(Number(fcstDataSno.replace(/[a-zA-Z]/gi,'')));
+                }
+
+                if(!weatherDataSno){
+                    weatherSno.data.push(0);
+                }else{
+                    weatherSno.data.push(Number(weatherDataSno));
+                }
+
+            }
+
+            temperatureSeries.push(fcstTmp);
+            temperatureSeries.push(weatherTmp);
+            humiditySeries.push(fcstHumidity);
+            humiditySeries.push(weatherHumidity);
+            pcpSeries.push(fcstPcp);
+            pcpSeries.push(weatherPcp);
+            snowSeries.push(fcstSno);
+            snowSeries.push(weatherSno);
+            vecSeries.push(fcstVec);
+            vecSeries.push(weatherVec);
+            wsdSeries.push(fcstWsd);
+            wsdSeries.push(weatherWsd);
+
+            const temperatureData = {
+                categories: ['06시', '09시', '12시', '15시', '18시', '21시', '23시'],
+                series: temperatureSeries,
+            }
+
+            const humidityData = {
+                categories: ['06시', '09시', '12시', '15시', '18시', '21시', '23시'],
+                series: humiditySeries,
+            }
+
+            const pcpData = {
+                categories: ['06시', '09시', '12시', '15시', '18시', '21시', '23시'],
+                series: pcpSeries,
+            }
+
+            const snoData = {
+                categories: ['06시', '09시', '12시', '15시', '18시', '21시', '23시'],
+                series: snowSeries,
+            }
+
+            const vecData = {
+                categories: ['06시', '09시', '12시', '15시', '18시', '21시', '23시'],
+                series: vecSeries,
+            }
+
+            const wsdData = {
+                categories: ['06시', '09시', '12시', '15시', '18시', '21시', '23시'],
+                series: wsdSeries,
+            }
+
+            resultData.temperatureData = temperatureData;
+            resultData.humidityData = humidityData;
+            resultData.pcpData = pcpData;
+            resultData.snoData = snoData;
+            resultData.vecData = vecData;
+            resultData.wsdData = wsdData;
+            resultData.fcstTMX = fcstData[3].tmx;
+            resultData.fcstTMN = fcstData[0].tmn;
+            resultData.weatherTMX = weatherData[3].tmx;
+            resultData.weatherTMN = weatherData[0].tmn;
+
+            return resultData;
         }
     }
 
