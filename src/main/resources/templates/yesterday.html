@@ -8,26 +8,26 @@
     <select id="location" class="form-control mx-2 rounded" ></select>
     <input type="date" class="form-control mx-2 rounded" >
   </div>
-  <div id="first-row" class="row w-100 mb-3 justify-content-between">
-    <div class="card fcst-card col-md-3 p-0 rounded">
+  <div id="first-row" class="row w-100 mb-2 justify-content-between">
+    <div class="card fcst-card col-6 col-md-3 p-0 rounded">
         <div class="card-header">예보 최저</div>
         <div class="card-body">
             <h5 class="card-title"> - °</h5>
         </div>
     </div>
-    <div class="card weather-card col-md-3 p-0  rounded">
+    <div class="card weather-card col-6 col-md-3 p-0  rounded">
         <div class="card-header">관측 최저</div>
         <div class="card-body">
             <h5 class="card-title"> - °</h5>
         </div>
     </div>
-    <div class="card col-md-3 fcst-card p-0  rounded">
+    <div class="card col-6 col-md-3 fcst-card p-0 rounded">
         <div class="card-header">예보 최고</div>
         <div class="card-body">
             <h5 class="card-title"> - °</h5>
         </div>
     </div>
-    <div class="card weather-card col-md-3 p-0  rounded">
+    <div class="card col-6 weather-card col-md-3 p-0  rounded">
         <div class="card-header">관측 최저</div>
         <div class="card-body">
             <h5 class="card-title"> - °</h5>
@@ -64,7 +64,10 @@
               </button>
           </div>
       </div>
-      <div class="col-md-4 rounded"></div>
+      <div class="col-md-4 rounded p-0 ">
+          <table class="w-75 h-100 m-auto">
+          </table>
+      </div>
   </div>    <!-- first-row end -->
 
 </div>     <!-- second-row end -->
@@ -104,6 +107,29 @@
                snowSheet.setData(data.snoData);
                humiditySheet.setData(data.humidityData);
                wsdSheet.setData(data.wsdData);
+
+               const tempData = data.temperatureData;
+
+               //테이블 세팅
+               let str = "<tr class='text-white'>" +
+                            "<td class='w-25 text-start align-middle ps-1 fw-bolder'>기온</td>" +
+                            "<td class='w-25 text-center align-middle'>&nbsp;&nbsp;</td>" +
+                            "<td class='w-25 text-center align-middle fw-bolder text-fcst'>예보</td>" +
+                            "<td class='w-25 text-center align-middle fw-bolder text-weather'>관측</td>" +
+                         "</tr>";
+
+               const loopSize = tempData.categories.length;
+               for (let i = 0; i < loopSize; i++) {
+                   str += "<tr>"
+                   str +=   "<td class='w-25 text-start align-middle ps-1 fw-bolder text-white'>"+ tempData.categories[i] +"</td>"
+                   str +=   "<td class='w-25 text-center align-middle '>&nbsp;&nbsp;</td>"
+                   str +=   "<td class='w-25 text-center align-middle fw-bolder text-fcst'>"+tempData.series[0].data[i]+"°</td>"
+                   str +=   "<td class='w-25 text-center align-middle fw-bolder text-weather'>"+tempData.series[1].data[i]+"°</td>"
+                   str += "</tr>";
+               }
+
+               document.querySelector('#second-row .col-md-4 table').innerHTML = str;
+
 
             }
         });

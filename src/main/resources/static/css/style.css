@@ -21,14 +21,22 @@
   height: 40% !important;
 }
 
-.font-fcst {
+.text-fcst {
   color: #2BAFFA !important;
+}
+
+.text-weather {
+  color: #ffc107 !important;
 }
 
 @media (min-width: 768px) {
   .col-md-3 {
     flex: 0 0 auto;
     width: 24%;
+  }
+  .col-md-4 {
+    flex: 0 0 auto;
+    width: 32%;
   }
 }
 /**********************************************
@@ -161,48 +169,49 @@ i {
 #yesterday-container .row .col-md-10, #yesterday-container .row .col-md-11, #yesterday-container .row .col-md-12 {
   background-color: rgba(255, 255, 255, 0.4);
 }
-#yesterday-container #first-row {
+#yesterday-container #second-row {
   height: 40% !important;
 }
-#yesterday-container #first-row .carousel-control-next, #yesterday-container #first-row .carousel-control-prev {
+#yesterday-container #second-row .carousel-control-next, #yesterday-container #second-row .carousel-control-prev {
   width: 5%;
   bottom: 8%;
 }
-#yesterday-container #first-row canvas {
+#yesterday-container #second-row canvas {
   display: block;
   margin: 0 auto;
 }
-#yesterday-container #second-row table tr, #yesterday-container #second-row table td {
-  font-family: "NotoSansKR-Regular";
-  vertical-align: middle !important;
+#yesterday-container #first-row {
+  height: 20%;
+}
+#yesterday-container #first-row .fcst-card {
   color: white;
-  font-weight: bold;
-  padding-bottom: 5%;
+  font-family: "NanumPenScript-Regular";
 }
-#yesterday-container #second-row table tr td:nth-child(1), #yesterday-container #second-row table td td:nth-child(1) {
-  text-align: left !important;
-  font-size: 1em;
-  padding-left: 5%;
+#yesterday-container #first-row .fcst-card .card-header {
+  background-color: #2BAFFA !important;
+  font-size: 2em;
 }
-#yesterday-container #second-row table tr td:nth-child(2), #yesterday-container #second-row table td td:nth-child(2) {
-  text-align: center !important;
-  font-size: 0.9em;
+#yesterday-container #first-row .fcst-card .card-title {
+  text-align: center;
+  font-size: 4em;
+  margin: 0 !important;
+  position: relative;
+  top: 20%;
+}
+#yesterday-container #first-row .weather-card {
   color: white;
+  font-family: "NanumPenScript-Regular";
 }
-#yesterday-container #second-row table tr td:nth-child(3), #yesterday-container #second-row table td td:nth-child(3) {
-  text-align: center !important;
-  font-size: 0.9em;
-  color: white;
+#yesterday-container #first-row .weather-card .card-header {
+  background-color: #ffc107 !important;
+  font-size: 2em;
 }
-#yesterday-container #second-row table tr td:nth-child(4), #yesterday-container #second-row table td td:nth-child(4) {
-  text-align: right !important;
-  font-size: 1em;
-  color: white;
-}
-#yesterday-container #second-row table tr td:nth-child(5), #yesterday-container #second-row table td td:nth-child(5) {
-  text-align: right !important;
-  font-size: 1em;
-  padding-right: 5%;
+#yesterday-container #first-row .weather-card .card-title {
+  text-align: center;
+  font-size: 4em;
+  margin: 0 !important;
+  position: relative;
+  top: 20%;
 }
 
 @media screen and (max-width: 768px) {
@@ -227,7 +236,16 @@ i {
     margin-bottom: 5%;
   }
   #yesterday-container #first-row {
-    height: 40% !important;
+    height: 60% !important;
+  }
+  #yesterday-container #second-row {
+    height: 100% !important;
+  }
+  #yesterday-container #second-row .col-md-8 {
+    height: 45% !important;
+  }
+  #yesterday-container #second-row .col-md-4 {
+    height: 49% !important;
   }
 }
 /**********************************************

@@ -12,7 +12,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import javax.transaction.Transactional;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +26,7 @@ public class ScheduledTasks {
     private WeatherService weatherService;
 
 
-    @Scheduled(cron = "0 15 11 * * *")
+    @Scheduled(cron = "0 0 17 * * *")
     @Transactional
     public void weatherScheduler() {
         try {

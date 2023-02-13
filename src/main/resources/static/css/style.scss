@@ -25,8 +25,12 @@
   height: 40% !important;
 }
 
-.font-fcst{
+.text-fcst{
   color: #2BAFFA !important;
+}
+
+.text-weather{
+  color: #ffc107 !important;
 }
 
 @media (min-width: 768px){
@@ -34,7 +38,14 @@
     flex: 0 0 auto;
     width: 24%;
   }
+
+  .col-md-4 {
+    flex: 0 0 auto;
+    width: 32%;
+  }
 }
+
+
 
 
 /**********************************************
@@ -203,7 +214,7 @@ i {
 
   }
 
-  #first-row{
+  #second-row{
     height: 40% !important;
     .carousel-control-next, .carousel-control-prev{
       width: 5%;
@@ -219,52 +230,55 @@ i {
 
   }
 
-  #second-row{
-    table{
-      tr, td{
-        font-family: 'NotoSansKR-Regular';
-        vertical-align: middle !important;
-        color: white;
-        font-weight: bold;
-        padding-bottom: 5%;
+  #first-row{
+    height: 20%;
 
-        td:nth-child(1){
-          text-align: left !important;
-          font-size: 1em;
-          padding-left: 5%;
-        }
-
-        td:nth-child(2){
-          text-align: center !important;
-          font-size: 0.9em;
+       .fcst-card{
           color: white;
-        }
-
-        td:nth-child(3){
-          text-align: center !important;
-          font-size: 0.9em;
-          color: white;
-        }
-
-        td:nth-child(4){
-          text-align: right !important;
-          font-size: 1em;
-          color: white;
-        }
-
-        td:nth-child(5){
-          text-align: right !important;
-          font-size: 1em;
-          padding-right: 5%;
-        }
+          font-family: 'NanumPenScript-Regular';
 
 
+          .card-header{
+            background-color: #2BAFFA !important;
+            font-size: 2em;
+          }
+
+          .card-title{
+            text-align: center;
+            font-size: 4em;
+            margin: 0 !important;
+            position: relative;
+            top: 20%;
+          }
+       }
+
+    .weather-card{
+      color: white;
+      font-family: 'NanumPenScript-Regular';
+
+      .card-header{
+        background-color: #ffc107 !important;
+        font-size: 2em;
       }
+
+      .card-title{
+        text-align: center;
+        font-size: 4em;
+        margin: 0 !important;
+        position: relative;
+        top: 20%;
+      }
+
     }
+
   }
+
+
 }
 
 @media screen and (max-width: 768px) {
+
+
   #yesterday-container{
     overflow: scroll;
 
@@ -290,7 +304,20 @@ i {
     }
 
     #first-row{
-      height: 40% !important;
+      height: 60% !important;
+    }
+
+    #second-row{
+      height: 100% !important;
+      .col-md-8{
+        height: 45% !important;
+      }
+
+      .col-md-4{
+        height: 49% !important;
+      }
+
+
     }
 
   }

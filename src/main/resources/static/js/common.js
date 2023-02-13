@@ -3,6 +3,12 @@
 
 const Util = {
 
+    /**
+     * ajax통신
+     * @param param method, url, async..
+     * @param callback 비동기 방식일때 실행할 callback함수
+     * @returns {*}
+     */
     getAjax(param, callback){
             const httpRequest = new XMLHttpRequest();
             httpRequest.open(param.method, param.url, param.async);
