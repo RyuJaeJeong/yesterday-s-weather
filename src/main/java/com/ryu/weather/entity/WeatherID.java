@@ -2,17 +2,14 @@ package com.ryu.weather.entity;
 
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Embeddable
 @Data
 public class WeatherID implements Serializable {
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="location_no")
     private LocationEntity location;
 
