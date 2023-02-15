@@ -77,6 +77,20 @@ const Util = {
             }
         })
     },
+    /**
+     * 상태값을 받아 아이콘을 반환 해주는 함수
+     * @param sky 하늘 상태값
+     */
+    getIcon(sky){
+        sky = Number(sky);
+        if(0 <= sky&& sky<=5){
+            return "<i class=\"fa-regular fa-sun text-fcst \"></i>"
+        }else if(6 <= sky&& sky<=8){
+            return "<i class=\"fa-solid fa-cloud-sun text-fcst \"></i>"
+        }else{
+            return "<i class=\"fa-solid fa-clouds text-fcst\"></i>"
+        }
+    }
 
 
 }

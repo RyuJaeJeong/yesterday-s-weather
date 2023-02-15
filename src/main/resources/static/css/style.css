@@ -13,12 +13,8 @@
 /**********************************************
   common start
 **********************************************/
-.h-38 {
-  height: 38% !important;
-}
-
-.h-40 {
-  height: 40% !important;
+.w-20 {
+  width: 20% !important;
 }
 
 .text-fcst {
@@ -212,6 +208,14 @@ i {
   margin: 0 !important;
   position: relative;
   top: 20%;
+}
+#yesterday-container #temperature-sheet,
+#yesterday-container #rainfall-sheet,
+#yesterday-container #snow-sheet,
+#yesterday-container #humidity-sheet,
+#yesterday-container #wsd-sheet {
+  position: relative;
+  top: 5%;
 }
 
 @media screen and (max-width: 768px) {

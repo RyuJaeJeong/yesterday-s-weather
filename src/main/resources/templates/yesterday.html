@@ -12,33 +12,33 @@
     <div class="card fcst-card col-6 col-md-3 p-0 rounded">
         <div class="card-header">예보 최저</div>
         <div class="card-body">
-            <h5 class="card-title"> - °</h5>
+            <h5 class="card-title"> - °C</h5>
         </div>
     </div>
     <div class="card weather-card col-6 col-md-3 p-0  rounded">
         <div class="card-header">관측 최저</div>
         <div class="card-body">
-            <h5 class="card-title"> - °</h5>
+            <h5 class="card-title"> - °C</h5>
         </div>
     </div>
     <div class="card col-6 col-md-3 fcst-card p-0 rounded">
         <div class="card-header">예보 최고</div>
         <div class="card-body">
-            <h5 class="card-title"> - °</h5>
+            <h5 class="card-title"> - °C</h5>
         </div>
     </div>
     <div class="card col-6 weather-card col-md-3 p-0  rounded">
         <div class="card-header">관측 최저</div>
         <div class="card-body">
-            <h5 class="card-title"> - °</h5>
+            <h5 class="card-title"> - °C</h5>
         </div>
     </div>
   </div>
   <div id="second-row" class="row w-100 justify-content-between">
-      <div id="temperatureSheet-container" class="col-md-8 p-0 rounded">
+      <div id="chart-container" class="col-md-8 p-0 rounded">
           <div id="carouselExample" class="carousel slide w-100 h-100">
               <div class="carousel-inner w-100 h-100" style="text-align: center; vertical-align: middle !important;">
-                  <div id="" class="carousel-item w-100 h-100 active">
+                  <div class="carousel-item w-100 h-100 active">
                       <div id="temperature-sheet" ></div>
                   </div>
                   <div class="carousel-item w-100 h-100">
@@ -65,8 +65,40 @@
           </div>
       </div>
       <div class="col-md-4 rounded p-0 ">
-          <table class="w-75 h-100 m-auto">
-          </table>
+          <div id="carouselExampleIndicators" class="carousel slide w-100 h-100" >
+              <div class="carousel-indicators">
+                  <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                  <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                  <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                  <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button>
+                  <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="4" aria-label="Slide 5"></button>
+              </div>
+              <div class="carousel-inner w-100 h-100">
+                  <div class="carousel-item w-100 h-100 active">
+                      <table id="temperature-table" class="w-75 h-75 m-auto position-relative" style="top: 10%"></table>
+                  </div>
+                  <div class="carousel-item w-100 h-100">
+                      <table id="rainfall-table" class="w-75 h-75 m-auto position-relative" style="top: 10%"></table>
+                  </div>
+                  <div class="carousel-item w-100 h-100">
+                      <table id="snow-table" class="w-75 h-75 m-auto position-relative" style="top: 10%"></table>
+                  </div>
+                  <div class="carousel-item w-100 h-100">
+                      <table id="humidity-table" class="w-75 h-75 m-auto position-relative" style="top: 10%"></table>
+                  </div>
+                  <div class="carousel-item w-100 h-100">
+                      <table id="wsd-table" class="w-75 h-75 m-auto position-relative" style="top: 10%"></table>
+                  </div>
+              </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+              </button>
+          </div>
       </div>
   </div>    <!-- first-row end -->
 
@@ -94,54 +126,241 @@
 
                //상단 카드 세팅
                const fcstCard = document.querySelectorAll('#first-row .fcst-card .card-body .card-title')
-               fcstCard[0].innerText = data.fcstTMN + "°";
-               fcstCard[1].innerText = data.fcstTMX + "°";
+               fcstCard[0].innerText = data.fcstTMN + "°C";
+               fcstCard[1].innerText = data.fcstTMX + "°C";
 
                const weatherCard = document.querySelectorAll('#first-row .weather-card .card-body .card-title')
-               weatherCard[0].innerText = data.weatherTMN + "°";
-               weatherCard[1].innerText = data.weatherTMX + "°";
-
-               //차트 세팅
-               temperatureSheet.setData(data.temperatureData);
-               rainfallSheet.setData(data.pcpData);
-               snowSheet.setData(data.snoData);
-               humiditySheet.setData(data.humidityData);
-               wsdSheet.setData(data.wsdData);
+               weatherCard[0].innerText = data.weatherTMN + "°C";
+               weatherCard[1].innerText = data.weatherTMX + "°C";
 
                const tempData = data.temperatureData;
+               const skyData = data.skyData;
+               const pcpData = data.pcpData;
+               const popData = data.popData;
+               const snoData = data.snoData;
+               const humidityData = data.humidityData;
+               const wsdData = data.wsdData;
+               const vecData = data.vecData;
+
+               //차트 세팅
+               temperatureSheet.setData(tempData);
+               rainfallSheet.setData(pcpData);
+               snowSheet.setData(snoData);
+               humiditySheet.setData(humidityData);
+               wsdSheet.setData(wsdData);
 
                //테이블 세팅
-               let str = "<tr class='text-white'>" +
-                            "<td class='w-25 text-start align-middle ps-1 fw-bolder'>기온</td>" +
-                            "<td class='w-25 text-center align-middle'>&nbsp;&nbsp;</td>" +
-                            "<td class='w-25 text-center align-middle fw-bolder text-fcst'>예보</td>" +
-                            "<td class='w-25 text-center align-middle fw-bolder text-weather'>관측</td>" +
-                         "</tr>";
+               let tempStr = "<tr class='text-white'>" +
+                                "<td class='w-auto text-start align-middle ps-1 fw-bolder'>기온<span style='font-size: 0.75em'>(°C)</span></td>" +
+                                "<td class='w-auto text-center align-middle'>&nbsp;&nbsp;</td>" +
+                                "<td class='w-auto text-center align-middle'>&nbsp;&nbsp;</td>" +
+                                "<td class='w-auto text-end align-middle fw-bolder text-fcst'>예보</td>" +
+                                "<td class='w-auto text-end align-middle fw-bolder text-weather'>관측</td>" +
+                             "</tr>";
+
+               let rainfallStr = "<tr class='text-white'>" +
+                                    "<td class='w-auto text-start align-middle ps-1 fw-bolder'>비<span style='font-size: 0.75em'>(mm)</span></td>" +
+                                    "<td class='w-auto text-center align-middle'>&nbsp;&nbsp;</td>" +
+                                    "<td class='w-auto text-center align-middle'>&nbsp;&nbsp;</td>" +
+                                    "<td class='w-auto text-end align-middle fw-bolder text-fcst'>예보</td>" +
+                                    "<td class='w-auto text-end align-middle fw-bolder text-weather'>관측</td>" +
+                                 "</tr>";
+
+               let snowStr = "<tr class='text-white'>" +
+                                    "<td class='w-auto text-start align-middle ps-1 fw-bolder'>눈<span style='font-size: 0.75em'>(cm)</span></td>" +
+                                    "<td class='w-auto text-center align-middle'>&nbsp;&nbsp;</td>" +
+                                    "<td class='w-auto text-center align-middle'>&nbsp;&nbsp;</td>" +
+                                    "<td class='w-auto text-end align-middle fw-bolder text-fcst'>예보</td>" +
+                                    "<td class='w-auto text-end align-middle fw-bolder text-weather'>관측</td>" +
+                              "</tr>";
+
+               let humidityStr = "<tr class='text-white'>" +
+                                        "<td class='w-auto text-start align-middle ps-1 fw-bolder'>습도<span style='font-size: 0.75em'>(%)</span></td>" +
+                                        "<td class='w-auto text-center align-middle'>&nbsp;&nbsp;</td>" +
+                                        "<td class='w-auto text-center align-middle'>&nbsp;&nbsp;</td>" +
+                                        "<td class='w-auto text-end align-middle fw-bolder text-fcst'>예보</td>" +
+                                        "<td class='w-auto text-end align-middle fw-bolder text-weather'>관측</td>" +
+                                 "</tr>";
+               let wsdStr = "<tr class='text-white'>" +
+                                "<td class='w-auto text-start align-middle ps-1 fw-bolder'>바람<span style='font-size: 0.75em'>(m/s)</span></td>" +
+                                "<td class='w-auto text-center align-middle'>&nbsp;&nbsp;</td>" +
+                                "<td class='w-auto text-center align-middle'>&nbsp;&nbsp;</td>" +
+                                "<td class='w-auto text-end align-middle fw-bolder text-fcst'>예보</td>" +
+                                "<td class='w-auto text-end align-middle fw-bolder text-weather'>관측</td>" +
+                            "</tr>";
 
                const loopSize = tempData.categories.length;
                for (let i = 0; i < loopSize; i++) {
-                   str += "<tr>"
-                   str +=   "<td class='w-25 text-start align-middle ps-1 fw-bolder text-white'>"+ tempData.categories[i] +"</td>"
-                   str +=   "<td class='w-25 text-center align-middle '>&nbsp;&nbsp;</td>"
-                   str +=   "<td class='w-25 text-center align-middle fw-bolder text-fcst'>"+tempData.series[0].data[i]+"°</td>"
-                   str +=   "<td class='w-25 text-center align-middle fw-bolder text-weather'>"+tempData.series[1].data[i]+"°</td>"
-                   str += "</tr>";
+                   const weatherRainIcon = (Number(pcpData.series[1].data[i])>0)?"<i class=\"fa-solid fa-cloud-showers-heavy\"></i>":"<i class=\"fa-regular fa-sun\"></i>";
+                   const fcstSnowIcon = (Number(snoData.series[0].data[i])>0)?"<i class=\"fa-regular fa-snowflake\"></i>":"<i class=\"fa-regular fa-sun\"></i>";
+                   const weatherSnowIcon = (Number(snoData.series[1].data[i])>0)?"<i class=\"fa-regular fa-snowflake\"></i>":"<i class=\"fa-regular fa-sun\"></i>";
+                   const fcstVecIcon = "<i class=\"fa-solid fa-angles-up\" style=\"transform:rotate("+vecData.series[0].data[i]+"deg)\"></i>";
+                   const weatherVecIcon = "<i class=\"fa-solid fa-angles-up\" style=\"transform:rotate("+vecData.series[1].data[i]+"deg)\"></i>";
+
+                   tempStr += "<tr>"
+                   tempStr +=   "<td class='w-auto text-start align-middle ps-1 fw-bolder text-white'>"+ tempData.categories[i] +"</td>"
+                   tempStr +=   "<td class='w-auto text-start align-middle '>"+Util.getIcon(skyData.series[0].data[i])+"</td>"
+                   tempStr +=   "<td class='w-auto text-center align-middle text-weather'>"+weatherRainIcon+"</td>";
+                   tempStr +=   "<td class='w-auto text-end align-middle fw-bolder text-fcst'>"+tempData.series[0].data[i]+"</td>"
+                   tempStr +=   "<td class='w-auto text-end align-middle fw-bolder text-weather'>"+tempData.series[1].data[i]+"</td>"
+                   tempStr += "</tr>";
+
+                   rainfallStr += "<tr>"
+                   rainfallStr +=   "<td class='w-auto text-start align-middle ps-1 fw-bolder text-white'>"+ tempData.categories[i] +"</td>";
+                   rainfallStr +=   "<td class='w-auto text-start align-middle ps-3 text-fcst'><i class=\"fa-solid fa-droplet text-fcst\"></i>&nbsp;"+popData.series[0].data[i]+"<span style='font-size: 0.7em'>%</span></td>";
+                   rainfallStr +=   "<td class='w-auto text-center align-middle text-weather'>"+weatherRainIcon+"</td>";
+                   rainfallStr +=   "<td class='w-auto text-end align-middle fw-bolder text-fcst'>"+pcpData.series[0].data[i]+"</td>";
+                   rainfallStr +=   "<td class='w-auto text-end align-middle fw-bolder text-weather'>"+pcpData.series[1].data[i]+"</td>";
+                   rainfallStr += "</tr>";
+
+                   snowStr += "<tr>"
+                   snowStr +=   "<td class='w-auto text-start align-middle ps-1 fw-bolder text-white'>"+ snoData.categories[i] +"</td>"
+                   snowStr +=   "<td class='w-auto text-start align-middle text-fcst'>"+fcstSnowIcon+"</td>"
+                   snowStr +=   "<td class='w-auto text-center align-middle text-weather'>"+weatherSnowIcon+"</td>";
+                   snowStr +=   "<td class='w-auto text-end align-middle fw-bolder text-fcst'>"+snoData.series[0].data[i]+"</td>"
+                   snowStr +=   "<td class='w-auto text-end align-middle fw-bolder text-weather'>"+snoData.series[1].data[i]+"</td>"
+                   snowStr += "</tr>";
+
+                   humidityStr += "<tr>"
+                   humidityStr +=   "<td class='w-auto text-start align-middle ps-1 fw-bolder text-white'>"+ snoData.categories[i] +"</td>"
+                   humidityStr +=   "<td class='w-auto text-start align-middle text-fcst'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>"
+                   humidityStr +=   "<td class='w-auto text-center align-middle text-weather'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>";
+                   humidityStr +=   "<td class='w-auto text-end align-middle fw-bolder text-fcst'>"+humidityData.series[0].data[i]+"</td>"
+                   humidityStr +=   "<td class='w-auto text-end align-middle fw-bolder text-weather'>"+humidityData.series[1].data[i]+"</td>"
+                   humidityStr += "</tr>";
+
+                   wsdStr += "<tr>"
+                   wsdStr +=   "<td class='w-auto text-start align-middle ps-1 fw-bolder text-white'>"+ wsdData.categories[i] +"</td>"
+                   wsdStr +=   "<td class='w-auto text-start align-middle text-fcst'>"+fcstVecIcon+"</td>"
+                   wsdStr +=   "<td class='w-auto text-center align-middle text-weather'>"+weatherVecIcon+"</td>";
+                   wsdStr +=   "<td class='w-auto text-end align-middle fw-bolder text-fcst'>"+wsdData.series[0].data[i]+"</td>"
+                   wsdStr +=   "<td class='w-auto text-end align-middle fw-bolder text-weather'>"+wsdData.series[1].data[i]+"</td>"
+                   wsdStr += "</tr>";
+
                }
 
-               document.querySelector('#second-row .col-md-4 table').innerHTML = str;
-
+               document.querySelector('#temperature-table').innerHTML = tempStr;
+               document.querySelector('#rainfall-table').innerHTML = rainfallStr;
+               document.querySelector('#snow-table').innerHTML = snowStr;
+               document.querySelector('#humidity-table').innerHTML = humidityStr;
+               document.querySelector('#wsd-table').innerHTML = wsdStr;
 
             }
         });
     });
 
     function init(){
-        const chartWidth = document.getElementById('temperatureSheet-container').clientWidth;
-        const chartHeight = document.getElementById('temperatureSheet-container').clientHeight;
+        const chartWidth = document.getElementById('chart-container').clientWidth;
+        const chartHeight = document.getElementById('chart-container').clientHeight;
         const selectedMenu = document.querySelectorAll('.menu-1');
         selectedMenu[0].classList.add('text-warning');
         selectedMenu[1].classList.add('text-warning');
         Util.setForm();
+        const option = {
+            chart: {
+                title: {
+                    text: '기온(°C)',
+                    offsetX: Number(chartWidth) * 0.9 * 0.02,
+                    offsetY: -10,
+                    align: 'left',
+                },
+
+                width:Number(chartWidth) * 0.9,
+                height:Number(chartHeight) * 0.9,
+            },
+
+            legend: {
+                visible: true,
+                showCheckbox:false,
+                align:"bottom",
+            },
+
+            lang: {
+                noData: 'No Data',
+            },
+
+            tooltip: {
+                formatter: (value) => `${value}°C`,
+            },
+
+            exportMenu: {
+                visible: false
+            },
+
+            xAxis: {
+                label: {
+                    interval: 1,
+                },
+                tick: {
+                    interval: 1,
+                },
+                title: {
+                    offsetX: 0,
+                    offsetY: 0,
+                    visible:false,
+                },
+            },
+
+            yAxis: {
+                label: {
+                    interval: 1,
+                },
+            },
+
+            theme: {
+                title: {
+                    fontSize:36,
+                    fontFamily: 'NanumPenScript-Regular',
+                    color: 'rgb(255, 255, 255)',
+                },
+
+                chart: {
+                    fontFamily: 'Malgun Gothic',
+                    backgroundColor: 'rgba(255, 255, 255, 0)',
+                },
+
+                noData: {
+                    fontSize:36,
+                    fontFamily: 'NanumPenScript-Regular',
+                    color: 'white',
+                },
+
+                legend: {
+                    label: {
+                        fontFamily: 'NotoSansKR-Regular',
+                        fontSize: 12,
+                        color: 'rgb(255, 255, 255)',
+                    }
+                },
+
+                xAxis: {
+                    label: {
+                        fontFamily: 'NotoSansKR-Regular',
+                        fontWeight:'bold',
+                        fontSize: 12,
+                        color: 'white'
+                    },
+                    color:'white',
+                    width: '3',
+                },
+
+                yAxis: {
+                    label: {
+                        fontFamily: 'NotoSansKR-Regular',
+                        fontWeight:'bold',
+                        fontSize: 12,
+                        color: 'white'
+                    },
+                    color:'white',
+                    width: '3',
+                },
+
+            },
+
+            series: {
+                spline: true,
+            },
+        }
 
         temperatureSheet = toastui.Chart.lineChart({
             el : document.getElementById('temperature-sheet'),
@@ -166,226 +385,10 @@
                     },
                 ],
             },
-
-            options : {
-
-                chart: {
-                    width:Number(chartWidth) * 0.9,
-                    height:Number(chartHeight),
-                },
-
-                legend: {
-                    visible: true,
-                    showCheckbox:false,
-                    align:"bottom",
-                },
-
-                lang: {
-                    noData: 'No Data',
-                },
-
-                tooltip: {
-                    formatter: (value) => `${value}°`,
-                },
-
-                exportMenu: {
-                    visible: false
-                },
-
-                xAxis: {
-                    label: {
-                        interval: 1,
-                    },
-                    tick: {
-                        interval: 1,
-                    },
-                    title: {
-                        offsetX: 0,
-                        offsetY: 0,
-                        visible:false,
-                    },
-                },
-
-                yAxis: {
-                    label: {
-                        interval: 1,
-                    },
-                },
-
-                theme: {
-                    chart: {
-                        fontFamily: 'Malgun Gothic',
-                        backgroundColor: 'rgba(255, 255, 255, 0)',
-                    },
-
-                    noData: {
-                        fontFamily: 'NanumPenScript-Regular',
-                        fontSize:24,
-                        fontWeight: 'bold',
-                        color: 'white',
-                    },
-
-                    legend: {
-                        label: {
-                            fontFamily: 'NotoSansKR-Regular',
-                            fontSize: 12,
-                            color: 'rgb(255, 255, 255)',
-                        }
-                    },
-
-                    xAxis: {
-                        label: {
-                            fontFamily: 'NotoSansKR-Regular',
-                            fontWeight:'bold',
-                            fontSize: 12,
-                            color: 'white'
-                        },
-                        color:'white',
-                        width: '3',
-                    },
-
-                    yAxis: {
-                        label: {
-                            fontFamily: 'NotoSansKR-Regular',
-                            fontWeight:'bold',
-                            fontSize: 12,
-                            color: 'white'
-                        },
-                        color:'white',
-                        width: '3',
-                    },
-
-                },
-
-                series: {
-                    spline: true,
-                },
-
-            },
+            options : option,
         });
 
-        humiditySheet = toastui.Chart.barChart({
-            el : document.getElementById('humidity-sheet'),
-            data :{
-                categories: [
-                    '06시',
-                    '09시',
-                    '12시',
-                    '15시',
-                    '18시',
-                    '21시',
-                    '23시',
-                ],
-
-                series: [
-                    {
-                        name: '예보습도',
-                        data: [],
-                    },
-                    {
-                        name: '관측습도',
-                        data: [],
-                    },
-                ],
-            },
-
-            options : {
-
-                chart: {
-                    width:Number(chartWidth) * 0.9,
-                    height:Number(chartHeight),
-                },
-
-                legend: {
-                    visible: true,
-                    showCheckbox:false,
-                    align:"bottom",
-                },
-
-                lang: {
-                    noData: 'No Data',
-                },
-
-                tooltip: {
-                    formatter: (value) => `${value}%`,
-                },
-
-                exportMenu: {
-                    visible: false
-                },
-
-                xAxis: {
-                    label: {
-                        interval: 1,
-                    },
-                    tick: {
-                        interval: 1,
-                    },
-                    title: {
-                        offsetX: 0,
-                        offsetY: 0,
-                        visible:false,
-                    },
-                },
-
-                yAxis: {
-                    label: {
-                        interval: 1,
-                    },
-                },
-
-                theme: {
-                    chart: {
-                        fontFamily: 'Malgun Gothic',
-                        backgroundColor: 'rgba(255, 255, 255, 0)',
-                    },
-
-                    noData: {
-                        fontFamily: 'NanumPenScript-Regular',
-                        fontSize:24,
-                        fontWeight: 'bold',
-                        color: 'white',
-                    },
-
-                    legend: {
-                        label: {
-                            fontFamily: 'NotoSansKR-Regular',
-                            fontSize: 12,
-                            color: 'rgb(255, 255, 255)',
-                        }
-                    },
-
-                    xAxis: {
-                        label: {
-                            fontFamily: 'NotoSansKR-Regular',
-                            fontWeight:'bold',
-                            fontSize: 12,
-                            color: 'white'
-                        },
-                        color:'white',
-                        width: '3',
-                    },
-
-                    yAxis: {
-                        label: {
-                            fontFamily: 'NotoSansKR-Regular',
-                            fontWeight:'bold',
-                            fontSize: 12,
-                            color: 'white'
-                        },
-                        color:'white',
-                        width: '3',
-                    },
-
-                },
-
-                series: {
-                    spline: true,
-                },
-
-            },
-        });
-
+        option.chart.title.text = '비(mm)';
         rainfallSheet = toastui.Chart.columnChart({
             el : document.getElementById('rainfall-sheet'),
             data :{
@@ -411,103 +414,9 @@
                 ],
             },
 
-            options : {
-
-                chart: {
-                    width:Number(chartWidth) * 0.9,
-                    height:Number(chartHeight),
-                },
-
-                legend: {
-                    visible: true,
-                    showCheckbox:false,
-                    align:"bottom",
-                },
-
-                lang: {
-                    noData: 'No Data',
-                },
-
-                tooltip: {
-                    formatter: (value) => `${value}mm`,
-                },
-
-                exportMenu: {
-                    visible: false
-                },
-
-                xAxis: {
-                    label: {
-                        interval: 1,
-                    },
-                    tick: {
-                        interval: 1,
-                    },
-                    title: {
-                        offsetX: 0,
-                        offsetY: 0,
-                        visible:false,
-                    },
-                },
-
-                yAxis: {
-                    label: {
-                        interval: 1,
-                    },
-                },
-
-                theme: {
-                    chart: {
-                        fontFamily: 'Malgun Gothic',
-                        backgroundColor: 'rgba(255, 255, 255, 0)',
-                    },
-
-                    noData: {
-                        fontFamily: 'NanumPenScript-Regular',
-                        fontSize:24,
-                        fontWeight: 'bold',
-                        color: 'white',
-                    },
-
-                    legend: {
-                        label: {
-                            fontFamily: 'NotoSansKR-Regular',
-                            fontSize: 12,
-                            color: 'rgb(255, 255, 255)',
-                        }
-                    },
-
-                    xAxis: {
-                        label: {
-                            fontFamily: 'NotoSansKR-Regular',
-                            fontWeight:'bold',
-                            fontSize: 12,
-                            color: 'white'
-                        },
-                        color:'white',
-                        width: '3',
-                    },
-
-                    yAxis: {
-                        label: {
-                            fontFamily: 'NotoSansKR-Regular',
-                            fontWeight:'bold',
-                            fontSize: 12,
-                            color: 'white'
-                        },
-                        color:'white',
-                        width: '3',
-                    },
-
-                },
-
-                series: {
-                    spline: true,
-                },
-
-            },
+            options : option,
         });
-
+        option.chart.title.text = '눈(cm)';
         snowSheet = toastui.Chart.columnChart({
             el : document.getElementById('snow-sheet'),
             data :{
@@ -533,103 +442,38 @@
                 ],
             },
 
-            options : {
-
-                chart: {
-                    width:Number(chartWidth) * 0.9,
-                    height:Number(chartHeight),
-                },
-
-                legend: {
-                    visible: true,
-                    showCheckbox:false,
-                    align:"bottom",
-                },
-
-                lang: {
-                    noData: 'No Data',
-                },
-
-                tooltip: {
-                    formatter: (value) => `${value}cm`,
-                },
-
-                exportMenu: {
-                    visible: false
-                },
-
-                xAxis: {
-                    label: {
-                        interval: 1,
-                    },
-                    tick: {
-                        interval: 1,
-                    },
-                    title: {
-                        offsetX: 0,
-                        offsetY: 0,
-                        visible:false,
-                    },
-                },
-
-                yAxis: {
-                    label: {
-                        interval: 1,
-                    },
-                },
-
-                theme: {
-                    chart: {
-                        fontFamily: 'Malgun Gothic',
-                        backgroundColor: 'rgba(255, 255, 255, 0)',
-                    },
-
-                    noData: {
-                        fontFamily: 'NanumPenScript-Regular',
-                        fontSize:24,
-                        fontWeight: 'bold',
-                        color: 'white',
-                    },
-
-                    legend: {
-                        label: {
-                            fontFamily: 'NotoSansKR-Regular',
-                            fontSize: 12,
-                            color: 'rgb(255, 255, 255)',
-                        }
-                    },
-
-                    xAxis: {
-                        label: {
-                            fontFamily: 'NotoSansKR-Regular',
-                            fontWeight:'bold',
-                            fontSize: 12,
-                            color: 'white'
-                        },
-                        color:'white',
-                        width: '3',
-                    },
-
-                    yAxis: {
-                        label: {
-                            fontFamily: 'NotoSansKR-Regular',
-                            fontWeight:'bold',
-                            fontSize: 12,
-                            color: 'white'
-                        },
-                        color:'white',
-                        width: '3',
-                    },
-
-                },
-
-                series: {
-                    spline: true,
-                },
-
-            },
+            options : option,
         });
 
+        option.chart.title.text = '습도(%)';
+        humiditySheet = toastui.Chart.barChart({
+            el : document.getElementById('humidity-sheet'),
+            data :{
+                categories: [
+                    '06시',
+                    '09시',
+                    '12시',
+                    '15시',
+                    '18시',
+                    '21시',
+                    '23시',
+                ],
+
+                series: [
+                    {
+                        name: '예보습도',
+                        data: [],
+                    },
+                    {
+                        name: '관측습도',
+                        data: [],
+                    },
+                ],
+            },
+            options :option,
+        });
+
+        option.chart.title.text = '바람(m/s)';
         wsdSheet = toastui.Chart.lineChart({
             el : document.getElementById('wsd-sheet'),
             data :{
@@ -653,102 +497,7 @@
                     },
                 ],
             },
-
-            options : {
-
-                chart: {
-                    width:Number(chartWidth) * 0.9,
-                    height:Number(chartHeight),
-                },
-
-                legend: {
-                    visible: true,
-                    showCheckbox:false,
-                    align:"bottom",
-                },
-
-                lang: {
-                    noData: 'No Data',
-                },
-
-                tooltip: {
-                    formatter: (value) => `${value}m/s`,
-                },
-
-                exportMenu: {
-                    visible: false
-                },
-
-                xAxis: {
-                    label: {
-                        interval: 1,
-                    },
-                    tick: {
-                        interval: 1,
-                    },
-                    title: {
-                        offsetX: 0,
-                        offsetY: 0,
-                        visible:false,
-                    },
-                },
-
-                yAxis: {
-                    label: {
-                        interval: 1,
-                    },
-                },
-
-                theme: {
-                    chart: {
-                        fontFamily: 'Malgun Gothic',
-                        backgroundColor: 'rgba(255, 255, 255, 0)',
-                    },
-
-                    noData: {
-                        fontFamily: 'NanumPenScript-Regular',
-                        fontSize:24,
-                        fontWeight: 'bold',
-                        color: 'white',
-                    },
-
-                    legend: {
-                        label: {
-                            fontFamily: 'NotoSansKR-Regular',
-                            fontSize: 12,
-                            color: 'rgb(255, 255, 255)',
-                        }
-                    },
-
-                    xAxis: {
-                        label: {
-                            fontFamily: 'NotoSansKR-Regular',
-                            fontWeight:'bold',
-                            fontSize: 12,
-                            color: 'white'
-                        },
-                        color:'white',
-                        width: '3',
-                    },
-
-                    yAxis: {
-                        label: {
-                            fontFamily: 'NotoSansKR-Regular',
-                            fontWeight:'bold',
-                            fontSize: 12,
-                            color: 'white'
-                        },
-                        color:'white',
-                        width: '3',
-                    },
-
-                },
-
-                series: {
-                    spline: true,
-                },
-
-            },
+            options : option,
         });
 
     }
@@ -804,6 +553,13 @@
                 data:[],
             };
 
+            //예보 강수확률
+            const popSeries = [];
+            const fcstPop = {
+                name:"예보강수확률",
+                data:[],
+            };
+
             //강수량
             const pcpSeries = [];
             const fcstPcp = {
@@ -852,19 +608,23 @@
                 data:[],
             };
 
+            const skySeries = [];
+            const fcstSky = {
+                name:"예보하늘상태",
+                data:[],
+            };
 
             for (let i = 0; i < fcstSize; i++) {
                 fcstTmp.data.push(Number(fcstData[i].tmp));
                 weatherTmp.data.push(Number(weatherData[i].tmp));
-
                 fcstHumidity.data.push(Number(fcstData[i].reh));
                 weatherHumidity.data.push(Number(weatherData[i].reh));
-
                 fcstVec.data.push(Number(fcstData[i].vec));
                 weatherVec.data.push(Number(weatherData[i].vec));
-
                 fcstWsd.data.push(Number(fcstData[i].wsd));
                 weatherWsd.data.push(Number(weatherData[i].wsd));
+                fcstSky.data.push(Number(fcstData[i].sky));
+                fcstPop.data.push(Number(fcstData[i].pop));
 
                 let fcstDataPcp = fcstData[i].pcp;
                 let weatherDataPcp = weatherData[i].pcp;
@@ -910,6 +670,8 @@
             vecSeries.push(weatherVec);
             wsdSeries.push(fcstWsd);
             wsdSeries.push(weatherWsd);
+            skySeries.push(fcstSky);
+            popSeries.push(fcstPop);
 
             const temperatureData = {
                 categories: ['06시', '09시', '12시', '15시', '18시', '21시', '23시'],
@@ -941,16 +703,29 @@
                 series: wsdSeries,
             }
 
+            const skyData = {
+                categories: ['06시', '09시', '12시', '15시', '18시', '21시', '23시'],
+                series: skySeries,
+            }
+
+            const popData = {
+                categories: ['06시', '09시', '12시', '15시', '18시', '21시', '23시'],
+                series: popSeries,
+            }
+
             resultData.temperatureData = temperatureData;
             resultData.humidityData = humidityData;
+            resultData.popData = popData;
             resultData.pcpData = pcpData;
             resultData.snoData = snoData;
             resultData.vecData = vecData;
             resultData.wsdData = wsdData;
+            resultData.skyData = skyData;
             resultData.fcstTMX = fcstData[3].tmx;
             resultData.fcstTMN = fcstData[0].tmn;
             resultData.weatherTMX = weatherData[3].tmx;
             resultData.weatherTMN = weatherData[0].tmn;
+
 
             return resultData;
         }

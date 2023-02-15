@@ -17,12 +17,10 @@
   common start
 **********************************************/
 
-.h-38{
-  height: 38% !important;
-}
 
-.h-40{
-  height: 40% !important;
+
+.w-20{
+  width: 20% !important;
 }
 
 .text-fcst{
@@ -271,6 +269,16 @@ i {
 
     }
 
+
+  }
+
+  #temperature-sheet,
+  #rainfall-sheet,
+  #snow-sheet,
+  #humidity-sheet,
+  #wsd-sheet{
+    position: relative;
+    top: 5%;
   }
 
 
